@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
+//import 'package:rive/rive.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 import '../Functions/loginStream.dart';
@@ -13,19 +13,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late RiveAnimationController _controller;
+  //late RiveAnimationController _controller;
 
-  void _togglePlay() =>
-      setState(() => _controller.isActive = !_controller.isActive);
+  // void _togglePlay() =>
+  //     setState(() => _controller.isActive = !_controller.isActive);
 
   /// Tracks if the animation is playing by whether controller is running
-  bool get isPlaying => _controller.isActive;
+  // bool get isPlaying => _controller.isActive;
 
   @override
-  void initState() {
-    super.initState();
-    _controller = SimpleAnimation('idle');
-  }
+  // void initState() {
+  //   super.initState();
+  //   _controller = SimpleAnimation('idle');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +48,10 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                           width: 200,
                           height: 200,
-                          child: const RiveAnimation.asset(
-                            'assets/05_eye_rigv02.riv',
-                            fit: BoxFit.fill,
-                          ),
+                          // child: const RiveAnimation.asset(
+                          //   'assets/05_eye_rigv02.riv',
+                          //   fit: BoxFit.fill,
+                          // ),
                         ),
                         const SizedBox(height: 50,),
                         Center(
