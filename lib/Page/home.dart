@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
         Spacer(),
         CategoryButtons(where: '/bibleList', buttonName: '월간\n감정', buttonIcon: Icons.calendar_month),
         Spacer(),
-        CategoryButtons(where: '/pictures', buttonName: '한줄\n일기', buttonIcon: Icons.note_alt,),
+        CategoryButtons(where: '/diary', buttonName: '한줄\n일기', buttonIcon: Icons.note_alt,),
         Spacer(),
       ],
     );

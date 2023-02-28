@@ -16,9 +16,9 @@ class _DiaryState extends State<Diary> {
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
           .then((RawDatagramSocket socket) {
         print('Sending from ${socket.address.address}:${socket.port}');
-        int port = 4000;
+        int port = 20001;
         socket.send('open'.codeUnits,
-            InternetAddress("192.168.205.240"), port);
+            InternetAddress("192.168.0.146"), port);
       });
     });
   }
@@ -28,9 +28,9 @@ class _DiaryState extends State<Diary> {
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
           .then((RawDatagramSocket socket) {
         print('Sending from ${socket.address.address}:${socket.port}');
-        int port = 4000;
+        int port = 20001;
         socket.send('close'.codeUnits,
-            InternetAddress("192.168.205.240"), port);
+            InternetAddress("192.168.0.146"), port);
       });
     });
   }

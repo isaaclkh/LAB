@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pibo/Provider/userProvider.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:io';
 import '../main.dart';
 
 class GetTextField extends StatefulWidget {
@@ -18,6 +20,35 @@ class GetTextField extends StatefulWidget {
 
 class _GetTextFieldState extends State<GetTextField> {
   String _name = '';
+
+  void _open(String msg) {
+    setState(() {
+      RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+          .then((RawDatagramSocket socket) {
+        print('Sending from ${socket.address.address}:${socket.port}');
+        int port = 20001;
+
+        String korean = base64.encode(utf8.encode(msg));
+
+        socket.send(korean.codeUnits,
+            InternetAddress("192.168.0.146"), port);
+        print(msg);
+        print(msg.codeUnits);
+      });
+    });
+  }
+
+  void _close() {
+    setState(() {
+      RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+          .then((RawDatagramSocket socket) {
+        print('Sending from ${socket.address.address}:${socket.port}');
+        int port = 20001;
+        socket.send('close'.codeUnits,
+            InternetAddress("192.168.0.146"), port);
+      });
+    });
+  }
 
   final TextEditingController _textController = new TextEditingController();
   @override
@@ -59,6 +90,7 @@ class _GetTextFieldState extends State<GetTextField> {
 
     setState(() => _name = value);
     setState(() => userName = value);
+    _open(_name);
     await context.read<UserProvider>().addUserName(_name);
     Navigator.pushReplacementNamed(context, '/home', arguments: _name);
   }

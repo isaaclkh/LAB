@@ -5,6 +5,7 @@ import 'package:pibo/Page/pictures.dart';
 
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
+import 'Page/diary.dart';
 import 'Page/getUserNamePage.dart';
 import 'Page/home.dart';
 import 'Provider/productProvider.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/bibleList' : (context) => const BibleList(),
         '/pictures' : (context) => const Pictures(),
         '/home' : (context) => const HomePage(),
+        '/diary' : (context) => const Diary(),
       },
     );
   }
