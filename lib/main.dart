@@ -12,6 +12,8 @@ import 'Provider/userProvider.dart';
 import 'functions/loginStream.dart';
 import 'firebase_options.dart';
 
+String userName = '';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

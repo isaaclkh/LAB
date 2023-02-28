@@ -12,19 +12,29 @@ class CategoryButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(150,100),
+        minimumSize: Size(140,170),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
       ),
       onPressed: (){
         Navigator.pushNamed(context, where);
       },
       child: SizedBox(
         height: 100,
+        width: 100,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(buttonIcon),
-            const SizedBox(height: 15,),
-            Text(buttonName),
+            Icon(buttonIcon,size: 45,),
+            Spacer(),
+            Row(
+              children: [
+                const SizedBox(width: 6,),
+                Text(buttonName),
+              ],
+            ),
           ],
         ),
       ),
