@@ -10,7 +10,7 @@ import 'Page/getUserNamePage.dart';
 import 'Page/home.dart';
 import 'Provider/productProvider.dart';
 import 'Provider/userProvider.dart';
-import 'functions/loginStream.dart';
+import 'Functions/loginStream.dart';
 import 'firebase_options.dart';
 
 String userName = '';
