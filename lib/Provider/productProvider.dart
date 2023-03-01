@@ -15,7 +15,7 @@ class ProductProvider extends ChangeNotifier{
   // Get a non-default Storage bucket
   late FirebaseStorage storage;
   late Reference storageRef;
-  CollectionReference products = FirebaseFirestore.instance.collection('products');
+  CollectionReference products = FirebaseFirestore.instance.collection('users');
 
   void init(){
     storage = FirebaseStorage.instance;
@@ -23,17 +23,52 @@ class ProductProvider extends ChangeNotifier{
   }
 
   List<Product> _productList = [];
+  List<Feeling> _feelingList = [];
 
   List<Product> getProductList(){
     return _productList;
   }
 
+  List<Feeling> getFeelingList(){
+    return _feelingList;
+  }
+
   bool _noP = true;
   bool getNoProduct() => _noP;
 
-  Future<void> getProducts(String uid) async{
-    print(uid);
-    await products.doc(uid).collection("product").get().then((value){
+  bool _noF = true;
+  bool getNoFeeling() => _noF;
+
+  Future<void> getFeeling(String user) async {
+    if (kDebugMode) {
+      print(user);
+    }
+
+    await products.doc(user).collection("감정").get().then((value){
+      if(value.size == 0){
+        _noP = true;
+      }
+
+      else{
+        _noF = false;
+        List _list = value.docs.map((sd){}).toList();
+        _feelingList.clear();
+
+        for(int i = 0 ; i < _list.length ; i++){
+          _feelingList.add(Feeling(
+              feel: _list[i]["느낌"],
+              date: _list[i]["날짜"],
+          ));
+        }
+      }
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> getProducts(String user) async{
+    print(user);
+    await products.doc(user).collection("product").get().then((value){
       if(value.size == 0){
         _noP = true;
       }
@@ -172,4 +207,14 @@ class Product {
   final String url;
   final String text;
   final String address;
+}
+
+class Feeling{
+  const Feeling({
+    required this.feel,
+    required this.date,
+  });
+
+  final String feel;
+  final String date;
 }
