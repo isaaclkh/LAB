@@ -28,12 +28,16 @@ class FeelingState extends State<Feeling> {
       body: ListView(
         children: [
           Consumer<ApplicationState>(
-            builder: (context, appState, _) => Column(
-              children: [
-                Text(appState.feelings.first.feel),
-              ],
-            ),
-          )
+            builder: (context, appState, _){
+              if(appState.noFeel){
+                return Text("no data");
+              }
+
+              else{
+                return Text(appState.feelings.first.feel);
+              }
+            }
+          ),
         ],
       ),
     );

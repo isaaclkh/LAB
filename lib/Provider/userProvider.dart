@@ -1,14 +1,34 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class UserProvider extends ChangeNotifier{
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  CollectionReference uname = FirebaseFirestore.instance.collection('currentUser');
+
+  Future<String> getUid() async => await FirebaseAuth.instance.currentUser!.uid;
+  StreamSubscription<DocumentSnapshot>? _userName;
 
   UserProvider(){
     init();
   }
 
   void init() async{
+    _userName = FirebaseFirestore.instance
+        .collection("currentUser")
+        .doc("VHRiz1RFjGbVMXWB3IP3")
+        .snapshots()
+        .listen((snapshot){
+      if(snapshot.data()!['userName'] != ""){
+        _userName = userName as StreamSubscription<DocumentSnapshot<Object?>>?;
+      }
+      notifyListeners();
+    });
 
   }
 
@@ -20,17 +40,23 @@ class UserProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-  Future<String> getUid() async => await FirebaseAuth.instance.currentUser!.uid;
 
   Future<void> addUserName(String userName) async{
     await users.doc(userName).set(<String, dynamic>{
       "name" : userName,
     }).then((value){
+      _userName = userName as StreamSubscription<DocumentSnapshot<Object?>>?;
+    }).onError((error, stackTrace) => null);
+    notifyListeners();
+  }
+
+  Future<void> updateCurrentUser(String UN) async{
+    await uname.doc('VHRiz1RFjGbVMXWB3IP3').update(<String, dynamic>{
+      "userName" : userName,
+    }).then((value){
 
     }).onError((error, stackTrace) => null);
-
+    notifyListeners();
   }
 
   Future<void> addUser(User user) async{

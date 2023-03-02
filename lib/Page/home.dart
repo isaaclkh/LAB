@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pibo/Functions/koreanJongSong.dart';
 import 'package:pibo/Page/getUserNamePage.dart';
+import 'package:pibo/Provider/userProvider.dart';
 import 'package:pibo/components/categoryButtons.dart';
 import 'package:pibo/components/getTextField.dart';
 import 'package:provider/provider.dart';
@@ -108,6 +109,7 @@ class _HomePageState extends State<HomePage> {
               ),
               onPressed: (){
                 //FirebaseAuth.instance.signOut();
+                UserProvider().updateCurrentUser("");
                 Navigator.pushReplacementNamed(context, '/');
               },
               child: const Text('나가기'),

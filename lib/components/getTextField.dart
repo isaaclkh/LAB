@@ -49,7 +49,7 @@ class _GetTextFieldState extends State<GetTextField> {
     });
   }
 
-  final TextEditingController _textController = new TextEditingController();
+  final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -92,6 +92,7 @@ class _GetTextFieldState extends State<GetTextField> {
 
     setState(() => name = value);
     setState(() => userName = value);
+    UserProvider().updateCurrentUser(value);
     _open(name);
     await context.read<UserProvider>().addUserName(name);
     Navigator.pushReplacementNamed(context, '/home', arguments: name);
