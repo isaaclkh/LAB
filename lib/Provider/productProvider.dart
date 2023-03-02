@@ -23,14 +23,14 @@ class ProductProvider extends ChangeNotifier{
   }
 
   List<Product> _productList = [];
-  List<Feeling> _feelingList = [];
+  List<Feel> feelingList = [];
 
   List<Product> getProductList(){
     return _productList;
   }
 
-  List<Feeling> getFeelingList(){
-    return _feelingList;
+  List<Feel> getFeelingList(){
+    return feelingList;
   }
 
   bool _noP = true;
@@ -51,13 +51,13 @@ class ProductProvider extends ChangeNotifier{
 
       else{
         _noF = false;
-        List _list = value.docs.map((sd){}).toList();
-        _feelingList.clear();
+        List list = value.docs.map((sd){}).toList();
+        feelingList.clear();
 
-        for(int i = 0 ; i < _list.length ; i++){
-          _feelingList.add(Feeling(
-              feel: _list[i]["느낌"],
-              date: _list[i]["날짜"],
+        for(int i = 0 ; i < list.length ; i++){
+          feelingList.add(Feel(
+              feel: list[i]["느낌"],
+              date: list[i]["날짜"],
           ));
         }
       }
@@ -74,16 +74,16 @@ class ProductProvider extends ChangeNotifier{
       }
       else{
         _noP = false;
-        List _list = value.docs.map((sd){}).toList();
+        List list = value.docs.map((sd){}).toList();
         _productList.clear();
-        for(int i = 0 ; i < _list.length ; i++){
+        for(int i = 0 ; i < list.length ; i++){
           _productList.add(Product(
-              category: _list[i]["category"],
-              name: _list[i]["name"],
-              productName: _list[i]["productName"],
-              url: _list[i]["fileUrl"],
-              text: _list[i]["text"],
-              address: _list[i]["address"]
+              category: list[i]["category"],
+              name: list[i]["name"],
+              productName: list[i]["productName"],
+              url: list[i]["fileUrl"],
+              text: list[i]["text"],
+              address: list[i]["address"]
           ));
         }
 
@@ -209,8 +209,8 @@ class Product {
   final String address;
 }
 
-class Feeling{
-  const Feeling({
+class Feel{
+  const Feel({
     required this.feel,
     required this.date,
   });

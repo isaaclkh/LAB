@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       children: const [
         Spacer(),
-        CategoryButtons(where: '/bibleList', buttonName: '월간\n감정', buttonIcon: Icons.calendar_month),
+        CategoryButtons(where: '/feeling', buttonName: '월간\n감정', buttonIcon: Icons.calendar_month),
         Spacer(),
         CategoryButtons(where: '/diary', buttonName: '한줄\n일기', buttonIcon: Icons.note_alt,),
         Spacer(),

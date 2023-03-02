@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pibo/Page/bibleList.dart';
+import 'package:pibo/Provider/appState.dart';
 import 'package:provider/provider.dart';
 import 'package:pibo/Page/pictures.dart';
 
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 import 'Page/diary.dart';
+import 'Page/feeling.dart';
 import 'Page/getUserNamePage.dart';
 import 'Page/home.dart';
 import 'Provider/productProvider.dart';
@@ -25,6 +27,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => ApplicationState()),
       ],
       child: const MyApp(),
     ),
@@ -37,28 +40,61 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Pibo",
-      theme: ThemeData(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => ApplicationState()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Pibo",
+        theme: ThemeData(
         primaryColor: Colors.lightBlueAccent,
         textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Colors.black),
+        bodyText1: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-      ),
-      home: const GetUserNamePage(),
-      // LoginStream().handleAuthState(),
-      // ProfilePage(),
+        ),
+        home: const GetUserNamePage(),
+        // LoginStream().handleAuthState(),
+        // ProfilePage(),
 
-      initialRoute: '/',
-      routes: {
-        // '/splash/init': (context) => const InitPage(),
-        '/bibleList' : (context) => const BibleList(),
-        '/pictures' : (context) => const Pictures(),
-        '/home' : (context) => const HomePage(),
-        '/diary' : (context) => const Diary(),
-      },
+        initialRoute: '/',
+        routes: {
+          // '/splash/init': (context) => const InitPage(),
+          '/bibleList': (context) => const BibleList(),
+          '/pictures': (context) => const Pictures(),
+          '/home': (context) => const HomePage(),
+          '/diary': (context) => const Diary(),
+          '/feeling': (context) => const Feeling(),
+        },
+      ),
     );
+
+    // return MaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: "Pibo",
+    //   theme: ThemeData(
+    //     primaryColor: Colors.lightBlueAccent,
+    //     textTheme: const TextTheme(
+    //       bodyText1: TextStyle(color: Colors.black),
+    //     ),
+    //     backgroundColor: Colors.white,
+    //   ),
+    //   home: const GetUserNamePage(),
+    //   // LoginStream().handleAuthState(),
+    //   // ProfilePage(),
+    //
+    //   initialRoute: '/',
+    //   routes: {
+    //     // '/splash/init': (context) => const InitPage(),
+    //     '/bibleList' : (context) => const BibleList(),
+    //     '/pictures' : (context) => const Pictures(),
+    //     '/home' : (context) => const HomePage(),
+    //     '/diary' : (context) => const Diary(),
+    //     '/feeling' : (context) => const Feeling(),
+    //   },
+    // );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pibo/Page/home.dart';
 import 'package:pibo/Provider/userProvider.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -13,13 +14,11 @@ class GetTextField extends StatefulWidget {
   @override
   State<GetTextField> createState() => _GetTextFieldState();
 
-  String getName() {
-    return _GetTextFieldState()._name;
-  }
+  String getName() => _GetTextFieldState().name;
 }
 
 class _GetTextFieldState extends State<GetTextField> {
-  String _name = '';
+  String name = '';
 
   void _open(String msg) {
     setState(() {
@@ -84,15 +83,18 @@ class _GetTextFieldState extends State<GetTextField> {
 
   void _onSubmit(String value) async{
 
-    if(value.length >= 3){
+    if(value == 'test'){
+      value = value;
+    }
+    else if(value.length >= 3){
       value = value.substring(value.length-2);
     }
 
-    setState(() => _name = value);
+    setState(() => name = value);
     setState(() => userName = value);
-    _open(_name);
-    await context.read<UserProvider>().addUserName(_name);
-    Navigator.pushReplacementNamed(context, '/home', arguments: _name);
+    _open(name);
+    await context.read<UserProvider>().addUserName(name);
+    Navigator.pushReplacementNamed(context, '/home', arguments: name);
   }
 
 }
