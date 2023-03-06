@@ -13,6 +13,7 @@ class UserProvider extends ChangeNotifier{
 
   Future<String> getUid() async => await FirebaseAuth.instance.currentUser!.uid;
   StreamSubscription<DocumentSnapshot>? _userName;
+  StreamSubscription<DocumentSnapshot<Object?>>? get getUName => _userName;
 
   UserProvider(){
     init();
@@ -91,6 +92,19 @@ class UserProvider extends ChangeNotifier{
         Map<String, dynamic> data = value.data() as Map<String, dynamic>;
         return Text("Name: ${data['name']}");
       }
+    });
+  }
+
+  Future<void> changeCurrentUser() async{
+    _userName = FirebaseFirestore.instance
+        .collection("currentUser")
+        .doc("VHRiz1RFjGbVMXWB3IP3")
+        .snapshots()
+        .listen((snapshot){
+      if(snapshot.data()!['userName'] != ""){
+        _userName = userName as StreamSubscription<DocumentSnapshot<Object?>>?;
+      }
+      notifyListeners();
     });
   }
 
