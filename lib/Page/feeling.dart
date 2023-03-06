@@ -37,24 +37,36 @@ class FeelingState extends State<Feeling> {
           }
 
           else{
-            for(int i=0; i<appState.feelings.length; i++){
-              return ListView(
-                children: [
-                  Row(
-                    children: [
-                      const Text('Feel: '),
-                      Text(appState.feelings[i].feel),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Text('Date: '),
-                      Text(appState.feelings[i].date),
-                    ],
-                  ),
-                ],
-              );
-            }
+            return ListView(
+              children: [
+
+                Row(
+                  children: [
+                    const Text('Feel: '),
+                    Text(appState.feelings[0].feel),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text('Date: '),
+                    Text(appState.feelings[0].date),
+                  ],
+                ),
+
+                Row(
+                  children: [
+                    const Text('Feel: '),
+                    Text(appState.feelings[1].feel),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text('Date: '),
+                    Text(appState.feelings[1].date),
+                  ],
+                ),
+              ],
+            );
           }
 
           return const Center(child: Text('ERROR!!'),);
