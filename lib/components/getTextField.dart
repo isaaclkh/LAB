@@ -92,11 +92,9 @@ class _GetTextFieldState extends State<GetTextField> {
 
     setState(() => name = value);
     setState(() => userName = value);
-    UserProvider().updateCurrentUser(value);
-    UserProvider().changeCurrentUser();
     _open(name);
     await context.read<UserProvider>().addUserName(name);
-    Navigator.pushReplacementNamed(context, '/home', arguments: name);
+    Navigator.pushReplacementNamed(context, '/initial', arguments: name);
   }
 
 }

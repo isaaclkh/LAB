@@ -43,6 +43,11 @@ dependencies:
   firebase_storage: ^11.0.10
   image_picker: ^0.8.6+1
   permission_handler: ^10.2.0
+  ionicons: ^0.2.2
+  flutter_onboarding_slider: ^1.0.8
+  lottie: ^2.2.0
+  table_calendar: ^3.0.8
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +77,10 @@ flutter:
    - assets/pibo_hi.png
    - assets/logo.png
    - assets/bgIm.jpg
+   - assets/onboarding/robot_first.json
+   - assets/onboarding/robot_talk.json
+   - assets/onboarding/robot_talk2.json
+   - assets/onboarding/robot_last.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

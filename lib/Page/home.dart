@@ -24,7 +24,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
-
   // @override
   // void initState() async{
   //   // TODO: implement initState
@@ -41,9 +40,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
         elevation: 0.0,
-        actions: [
-          Image.asset('assets/pibo_hi.png', width: 100,),
-        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -61,17 +57,22 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 50,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Spacer(flex: 1,),
-                Text(
-                  '은쪽이는\n${KoreanJongSong().KoreanLEE(userName)}와 친해지고 싶어',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    Image.asset('assets/pibo_hi.png', width: 100,),
+                    Text(
+                      '은쪽이는\n${KoreanJongSong().KoreanLEE(userName)}와 친해지고 싶어',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
                 Spacer(flex: 7,),
               ],
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            const SizedBox(height: 50,),
+            const SizedBox(height: 10,),
 
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: (){
                 //FirebaseAuth.instance.signOut();
                 UserProvider().updateCurrentUser("");
-                Navigator.pushReplacementNamed(context, '/');
+                Navigator.pushReplacementNamed(context, '/username');
               },
               child: const Text('나가기'),
             ),

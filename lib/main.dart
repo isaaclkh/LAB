@@ -1,19 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pibo/Page/bibleList.dart';
+import 'package:pibo/Page/onBoardingPage.dart';
 import 'package:pibo/Provider/appState.dart';
 import 'package:provider/provider.dart';
 import 'package:pibo/Page/pictures.dart';
 
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
+import 'Functions/bottomNavi.dart';
 import 'Page/diary.dart';
 import 'Page/feeling.dart';
 import 'Page/getUserNamePage.dart';
 import 'Page/home.dart';
 import 'Provider/productProvider.dart';
 import 'Provider/userProvider.dart';
-import 'Functions/loginStream.dart';
 import 'firebase_options.dart';
+
 
 String userName = '';
 
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         ),
-        home: const GetUserNamePage(),
+        home: const OnBoardingPage(),
         // LoginStream().handleAuthState(),
         // ProfilePage(),
 
@@ -68,6 +70,9 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
           '/diary': (context) => const Diary(),
           '/feeling': (context) => const Feeling(),
+          '/initial' : (context) => const BottomNavi(),
+          '/onboarding' : (context) => const OnBoardingPage(),
+          '/username' : (context) => const GetUserNamePage(),
         },
       ),
     );
