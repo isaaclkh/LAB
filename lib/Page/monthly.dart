@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -58,7 +57,7 @@ class _MonthlyState extends State<Monthly> {
                   return Center(
                     child: Text(
                       text,
-                      style: day.weekday == DateTime.sunday ? TextStyle(color: Colors.red) : TextStyle(color: Colors.blue),
+                      style: day.weekday == DateTime.sunday ? const TextStyle(color: Colors.red) : TextStyle(color: Colors.blue),
                     ),
                   );
                 }
