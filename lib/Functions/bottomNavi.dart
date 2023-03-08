@@ -6,6 +6,8 @@ import 'package:pibo/Page/home.dart';
 import 'package:pibo/Page/monthly.dart';
 import 'package:pibo/Page/pictures.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:pibo/Provider/appState.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavi extends StatefulWidget {
   const BottomNavi({Key? key}) : super(key: key);
@@ -33,6 +35,7 @@ class _BottomNaviState extends State<BottomNavi> {
     setState(() {
       _selectedIndex = index;
     });
+    ApplicationState().init();
   }
 
   @override
