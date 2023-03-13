@@ -37,23 +37,8 @@ class FeelingState extends State<Feeling> {
           }
 
           else{
-            print(appState.feelings.length);
-            return ListView(
-              children: [
-
-                Row(
-                  children: [
-                    const Text('Feel: '),
-                    Text(appState.feelings[0].feel),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('Date: '),
-                    Text(appState.feelings[0].date),
-                  ],
-                ),
-              ],
+            return Center(
+              child: Text(appState.feelings[0].feel),
             );
           }
 

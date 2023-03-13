@@ -21,6 +21,9 @@ class ApplicationState extends ChangeNotifier{
   List<Feelings> _feelings = [];
   List<Feelings> get feelings => _feelings;
 
+  List<Feelings> _f = [];
+  List<Feelings> get fee => _f;
+
   List<Diaries> _diaries = [];
   List<Diaries> get diaries => _diaries;
 
@@ -67,6 +70,23 @@ class ApplicationState extends ChangeNotifier{
 
       notifyListeners();
     });
+  }
+
+  Future<void> getF(String date) async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+    FirebaseFirestore.instance.collection("users").doc(userName).collection("감정").doc(date).snapshots().listen((snapshot) {
+      if(snapshot.exists){
+        _f = [];
+        _f.add(
+          Feelings(feel: snapshot.get('느낌'), date: snapshot.get('날짜')),
+        );
+      }
+      else{
+        _f=[];
+      }
+    });
+
   }
 
   Future<void> getDiary() async{
