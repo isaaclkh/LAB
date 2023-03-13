@@ -24,6 +24,9 @@ class ApplicationState extends ChangeNotifier{
   List<Feelings> _f = [];
   List<Feelings> get fee => _f;
 
+  bool _noF = true;
+  bool get noF => _noF;
+
   List<Diaries> _diaries = [];
   List<Diaries> get diaries => _diaries;
 
@@ -77,6 +80,7 @@ class ApplicationState extends ChangeNotifier{
 
     FirebaseFirestore.instance.collection("users").doc(userName).collection("감정").doc(date).snapshots().listen((snapshot) {
       if(snapshot.exists){
+        _noF = false;
         _f = [];
         _f.add(
           Feelings(feel: snapshot.get('느낌'), date: snapshot.get('날짜')),
@@ -84,6 +88,7 @@ class ApplicationState extends ChangeNotifier{
       }
       else{
         _f=[];
+        _noF = true;
       }
     });
 
