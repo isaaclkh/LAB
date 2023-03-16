@@ -51,24 +51,24 @@ class _BottomNaviState extends State<BottomNavi> {
         // showUnselectedLabels: true,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.blue,
+            backgroundColor: Color(0xff7286D3),
             icon: Icon(Ionicons.home_outline),
             label: 'HOME',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.black,
+            backgroundColor: Color(0xff82AAE3),
             icon: Icon(Ionicons.bookmark_outline),
             label: 'BIBLE',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: Color(0xff144272),
             icon: Icon(Ionicons.calendar_clear_outline),
-            label: 'MONTHLY',
+            label: 'MONTH',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.orange,
+            backgroundColor: Color(0xff6096B4),
             icon: Icon(Ionicons.image_outline),
-            label: 'PICTURES',
+            label: 'PHOTO',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -38,6 +38,7 @@ class _MonthlyState extends State<Monthly> {
       appBar: AppBar(
         title: Text('Monthly'),
         centerTitle: true,
+        backgroundColor: Color(0xff579BB1),
       ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,

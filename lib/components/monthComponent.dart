@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:pibo/Functions/feelIcon.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/appState.dart';
@@ -17,6 +18,8 @@ class MonthComponent extends StatefulWidget {
 
 class _MonthComponentState extends State<MonthComponent> {
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,14 +33,13 @@ class _MonthComponentState extends State<MonthComponent> {
               itemCount: appState.fee.length,
               itemBuilder: (context, index){
                 return Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Card(
                     elevation: 0.0,
                     child: ListTile(
                       title: Row(
                         children: [
-                          appState.fee[index].feel.contains('GOOD')?
-                              const Icon(Ionicons.happy_outline) : const Icon(Ionicons.sad_outline),
+                          FeelIcon().howDoYouFeel(appState.fee[index].feel),
                           const SizedBox(width: 15,),
                           Text(appState.fee[index].feel),
                         ],

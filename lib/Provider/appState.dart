@@ -1,15 +1,18 @@
 import 'dart:async';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pibo/Provider/userProvider.dart';
 import 'package:pibo/main.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../Model/photoModel.dart';
 import '../firebase_options.dart';
-import 'bibleModel.dart';
-import 'diaryModel.dart';
-import 'feelingModel.dart';
+import '../Model/bibleModel.dart';
+import '../Model/diaryModel.dart';
+import '../Model/feelingModel.dart';
 
 class ApplicationState extends ChangeNotifier{
   ApplicationState(){
@@ -20,6 +23,15 @@ class ApplicationState extends ChangeNotifier{
 
   List<Feelings> _feelings = [];
   List<Feelings> get feelings => _feelings;
+
+  List<Feelings> _onlyGood = [];
+  List<Feelings> get onlyGood => _onlyGood;
+
+  List<Feelings> _onlyBad = [];
+  List<Feelings> get onlyBad => _onlyBad;
+
+  List<Feelings> _onlyNorm = [];
+  List<Feelings> get onlyNorm => _onlyNorm;
 
   List<Feelings> _f = [];
   List<Feelings> get fee => _f;
@@ -33,6 +45,9 @@ class ApplicationState extends ChangeNotifier{
   List<Bible> _bible = [];
   List<Bible> get bible => _bible;
 
+  List<Photos> _photos = [];
+  List<Photos> get photos => _photos;
+
   bool _noFeel = true;
   bool get noFeel => _noFeel;
 
@@ -42,7 +57,14 @@ class ApplicationState extends ChangeNotifier{
   bool _noBible = true;
   bool get noBible => _noBible;
 
-  String userN = '';
+  bool _noPhoto = true;
+  bool get noPhoto => _noPhoto;
+
+  String _last = '';
+  String get last => _last;
+
+  bool _noLast = true;
+  bool get noLast => _noLast;
 
   Future<void> init() async{
 
@@ -167,6 +189,73 @@ class ApplicationState extends ChangeNotifier{
 
       notifyListeners();
     });
+  }
+
+  Future<void> getPhoto() async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+    FirebaseFirestore.instance.collection("users").doc(userName).collection("사진").snapshots().listen((snapshot) {
+
+      if(snapshot.docs.isEmpty){
+        _noPhoto = true;
+      }
+
+      else{
+        _noPhoto = false;
+        _photos = [];
+
+        for(final document in snapshot.docs){
+          _photos.add(
+            Photos(
+              time : document.data()['time'] as String,
+              url : document.data()['url'] as String,
+            ),
+          );
+        }
+      }
+
+      notifyListeners();
+    });
+
+  }
+
+  Future<String> downloadURL(String imgUrl) async {
+    String downloadURL = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child(imgUrl)
+        .getDownloadURL().toString();
+
+    return downloadURL;
+
+
+    // Within your widgets:
+    // Image.network(downloadURL);
+  }
+
+  Future<void> getLastDay() async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+    FirebaseFirestore.instance.collection("users").doc(userName).snapshots().listen((snapshot) {
+
+      if(snapshot.exists){
+        _noLast = false;
+        _last = snapshot.get('last');
+      }
+      else{
+        _noLast = true;
+      }
+
+      notifyListeners();
+    });
+  }
+
+  Future<void> initializeCount() async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    getFeeling();
+    
+    _onlyGood = _feelings.where((element) => element.feel.contains('GOOD')).toList();
+    _onlyBad = _feelings.where((element) => element.feel.contains('BAD')).toList();
+    _onlyNorm = _feelings.where((element) => element.feel.contains('NORMAL')).toList();
   }
 
 }

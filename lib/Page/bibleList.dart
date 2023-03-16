@@ -13,6 +13,7 @@ class BibleList extends StatelessWidget {
       appBar: AppBar(
         title: const Text('추천 받은 성경'),
         centerTitle: true,
+        backgroundColor: Color(0xff146C94),
       ),
 
       body: Consumer<ApplicationState>(
