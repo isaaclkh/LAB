@@ -77,7 +77,7 @@ class ApplicationState extends ChangeNotifier{
 
   Future<void> getF(String date) async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    print('provider '+date);
+    //print('provider '+date);
 
     FirebaseFirestore.instance.collection("users").doc(userName).collection("감정").doc(date).snapshots().listen((snapshot) {
       if(snapshot.exists){
@@ -120,6 +120,26 @@ class ApplicationState extends ChangeNotifier{
 
       notifyListeners();
     });
+  }
+
+  Future<void> getD(String date) async {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    //print('provider '+date);
+
+    FirebaseFirestore.instance.collection("users").doc(userName).collection("일기").doc(date).snapshots().listen((snapshot) {
+      if(snapshot.exists){
+        _noDiary = false;
+        _diaries = [];
+        _diaries.add( Diaries( note : snapshot.get('내용'), ),
+        );
+      }
+      else{
+        _noDiary = true;
+        _diaries = [];
+      }
+    });
+
+    notifyListeners();
   }
 
   Future<void> getBible() async{

@@ -1,9 +1,5 @@
-import 'dart:math';
-
-import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:pibo/components/monthComponent.dart';
-import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -36,7 +32,7 @@ class _MonthlyState extends State<Monthly> {
 
   @override
   Widget build(BuildContext context) {
-    appState = Provider.of<ApplicationState>(context);
+    //appState = Provider.of<ApplicationState>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +54,6 @@ class _MonthlyState extends State<Monthly> {
                 setState(() {
                   _selectedDay = selectedDay;
                   _focusedDay = focusedDay;
-                  appState.getF(selectedDay.toString().split(" ",)[0]);
                 });
 
                 print(selectedDay.toString().split(" ",)[0]);
@@ -87,32 +82,7 @@ class _MonthlyState extends State<Monthly> {
               ),
             ),
             const Divider(color: Colors.black),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _){
-                return Container(
-                  height: 200,
-                  child: ListView.builder(
-                    itemCount: appState.fee.length,
-                    itemBuilder: (context, index){
-                      return Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Card(
-                          elevation: 0.0,
-                          child: ListTile(
-                            title: Row(
-                              children: [
-                                Text(appState.fee[index].date),
-                                Text(appState.fee[index].feel),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                  ),
-                );
-              }
-            ),
+            MonthComponent(date: _selectedDay.toString().split(" ",)[0]),
           ],
         ),
       );

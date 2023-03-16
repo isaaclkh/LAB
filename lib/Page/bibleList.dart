@@ -16,40 +16,33 @@ class BibleList extends StatelessWidget {
       ),
 
       body: Consumer<ApplicationState>(
-          builder: (context, appState, _){
-            appState.getBible();
+        builder: (context, appState, _){
+          appState.getBible();
 
-            if(appState.noBible){
-              return const Center(
-                child: Text("아직 데이터가 없습니다!\n파이보와 더 시간을 보내세요!"),
-              );
-            }
-
-            else{
-              for(int i=0; i<appState.bible.length; i++){
-                return ListView(
-                  children: [
-                    // TODO : get doc id and show in text
-                    Text(''),
-                    Row(
-                      children: [
-                        const Text('Address: '),
-                        Text(appState.bible[i].address),
-                      ],
+          if(appState.bible.isNotEmpty){
+            return ListView.builder(
+                itemCount: appState.bible.length,
+                itemBuilder: (context, index){
+                  return Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Card(
+                      elevation: 0.0,
+                      child: ListTile(
+                        title: Text(appState.bible[index].words),
+                        subtitle: Text(appState.bible[index].address),
+                      ),
                     ),
-                    Row(
-                      children: [
-                        const Text('Words: '),
-                        Text(appState.bible[i].words),
-                      ],
-                    ),
-                  ],
-                );
-              }
-            }
-
-            return const Center(child: Text('ERROR!!'),);
+                  );
+                }
+            );
           }
+
+          else{
+            return const Center(
+              child: Text('아직 성경 추천 받은게 없어요\n파이보와 더 친해져보아요 :)'),
+            );
+          }
+        }
       ),
     );
   }
