@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:pibo/components/monthComponent.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -15,81 +19,102 @@ class Monthly extends StatefulWidget {
 class _MonthlyState extends State<Monthly> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   late dynamic _focusedDay;
-  late dynamic _selectedDay = DateTime.now();
+  late dynamic _selectedDay;
   late dynamic _selectedEvents;
   DateTime today = DateTime.now();
 
-  late String userFeel;
-  late String userDate;
+  @override
+  void initState() {
+    setState(() {
+      _selectedDay = DateTime.now();
+      _focusedDay = DateTime.now();
+    });
+    super.initState();
+  }
 
-  String get sd => _selectedDay.toString();
+  late ApplicationState appState;
 
   @override
   Widget build(BuildContext context) {
+    appState = Provider.of<ApplicationState>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MONTH'),
+        title: Text('Monthly'),
+        centerTitle: true,
       ),
-      body: Consumer<ApplicationState>(
-        builder: (context, appState, _){
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TableCalendar(
+              firstDay: DateTime.now().subtract(Duration(days: 365*10 + 2)),
+              lastDay: DateTime.now().add(Duration(days: 365*10 + 2)),
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                  appState.getF(selectedDay.toString().split(" ",)[0]);
+                });
 
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TableCalendar(
-                firstDay:DateTime.utc(today.year-1, today.month, today.day),  // 사용자가 접근할 수 있는 첫 날짜
-                lastDay: DateTime.utc(today.year+10, today.month, today.day), // 사용자가 접근할 수 있는 마지막 날짜
-                focusedDay: today,  // 자동 포커스 된 오늘 날짜
-                calendarFormat: _calendarFormat,  // month , 2 weeks, week
-                onFormatChanged: (format){   // month, 2 weeks, week 모드 바꿀 때 상태 변화
-                  setState((){
-                    _calendarFormat = format;
-                  });
-                },
-                selectedDayPredicate: (day){  // 오늘이 아닌 다른 날짜를 선택했을 경우 포커스
-                  return isSameDay(_selectedDay, day);
-                },
-                onDaySelected: (selectedDay, focusedDay){
-                  if (!isSameDay(_selectedDay, selectedDay)) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                      print(_selectedDay.toString().split(" ",)[0]);
-                      appState.getF(_selectedDay.toString().split(" ",)[0]);
-                      //_selectedEvents = _getEventsForDay(selectedDay);
-                    });
+                print(selectedDay.toString().split(" ",)[0]);
+              },
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+              calendarFormat: _calendarFormat,
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              calendarBuilders: CalendarBuilders( // Custom ui
+                dowBuilder: (context, day) {
+                  if (day.weekday == DateTime.sunday || day.weekday == DateTime.saturday) {
+                    final text = DateFormat.E().format(day);
+                    return Center(
+                      child: Text(
+                        text,
+                        style: day.weekday == DateTime.sunday ? TextStyle(color: Colors.red) : TextStyle(color: Colors.blue),
+                      ),
+                    );
                   }
                 },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                  print(focusedDay);
-                },
-                calendarBuilders: CalendarBuilders( // Custom ui
-                  dowBuilder: (context, day) {
-                    if (day.weekday == DateTime.sunday || day.weekday == DateTime.saturday) {
-                      final text = DateFormat.E().format(day);
-                      return Center(
-                        child: Text(
-                          text,
-                          style: day.weekday == DateTime.sunday ? TextStyle(color: Colors.red) : TextStyle(color: Colors.blue),
+              ),
+            ),
+            const Divider(color: Colors.black),
+            Consumer<ApplicationState>(
+              builder: (context, appState, _){
+                return Container(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: appState.fee.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Card(
+                          elevation: 0.0,
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                Text(appState.fee[index].date),
+                                Text(appState.fee[index].feel),
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     }
-                  },
-                ),
-              ),
-              const Divider(
-                  color: Colors.black
-              ),
-
-              appState.noF?
-                  const Text('no data'):
-                  Column(children: [Text(appState.fee.first.feel)],),
-            ],
-          );
-        }
-      ),
-    );
+                  ),
+                );
+              }
+            ),
+          ],
+        ),
+      );
   }
 }

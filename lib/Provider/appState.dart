@@ -75,8 +75,9 @@ class ApplicationState extends ChangeNotifier{
     });
   }
 
-  Future<void> getF(String date) async{
+  Future<void> getF(String date) async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    print('provider '+date);
 
     FirebaseFirestore.instance.collection("users").doc(userName).collection("감정").doc(date).snapshots().listen((snapshot) {
       if(snapshot.exists){
@@ -87,11 +88,12 @@ class ApplicationState extends ChangeNotifier{
         );
       }
       else{
-        _f=[];
         _noF = true;
+        _f=[];
       }
     });
 
+    notifyListeners();
   }
 
   Future<void> getDiary() async{
