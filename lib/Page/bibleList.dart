@@ -11,7 +11,7 @@ class BibleList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('추천 받은 성경'),
+        title: const Text('BIBLE'),
         centerTitle: true,
         backgroundColor: Color(0xff146C94),
       ),

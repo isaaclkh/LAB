@@ -36,7 +36,7 @@ class _MonthlyState extends State<Monthly> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Monthly'),
+        title: Text('CALENDAR'),
         centerTitle: true,
         backgroundColor: Color(0xff579BB1),
       ),

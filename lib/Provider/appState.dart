@@ -235,11 +235,11 @@ class ApplicationState extends ChangeNotifier{
   Future<void> getLastDay() async{
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-    FirebaseFirestore.instance.collection("users").doc(userName).snapshots().listen((snapshot) {
+    FirebaseFirestore.instance.collection("users").doc(userName).collection('LAST').snapshots().listen((snapshot) {
 
-      if(snapshot.exists){
+      if(snapshot.docs.isNotEmpty){
         _noLast = false;
-        _last = snapshot.get('last');
+        _last = snapshot.docs.first.data()['last'] as String;
       }
       else{
         _noLast = true;
