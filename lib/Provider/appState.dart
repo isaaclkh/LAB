@@ -252,10 +252,11 @@ class ApplicationState extends ChangeNotifier{
   Future<void> initializeCount() async{
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     getFeeling();
-    
+
     _onlyGood = _feelings.where((element) => element.feel.contains('GOOD')).toList();
     _onlyBad = _feelings.where((element) => element.feel.contains('BAD')).toList();
     _onlyNorm = _feelings.where((element) => element.feel.contains('NORMAL')).toList();
-  }
 
+    notifyListeners();
+  }
 }

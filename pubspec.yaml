@@ -78,6 +78,11 @@ flutter:
    - assets/pibo_hi.png
    - assets/logo.png
    - assets/bgIm.jpg
+   - assets/piboAppBar.jpeg
+   - assets/buttonBackground.png
+   - assets/cloud.png
+   - assets/sun.png
+   - assets/rain.png
    - assets/onboarding/robot_first.json
    - assets/onboarding/robot_talk.json
    - assets/onboarding/robot_talk2.json
@@ -94,17 +99,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+   - family: Spoqa
+     fonts:
+       - asset: assets/fonts/SpoqaHanSansNeo-Regular.otf
+         weight: 400
+       - asset: assets/fonts/SpoqaHanSansNeo-Bold.otf
+         weight: 700
+       - asset: assets/fonts/SpoqaHanSansNeo-light.otf
+         weight: 300
+       - asset: assets/fonts/SpoqaHanSansNeo-Medium.otf
+         weight: 500
+       - asset: assets/fonts/SpoqaHanSansNeo-Thin.otf
+         weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

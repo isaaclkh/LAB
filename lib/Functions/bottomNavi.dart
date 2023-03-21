@@ -19,10 +19,10 @@ class BottomNavi extends StatefulWidget {
 class _BottomNaviState extends State<BottomNavi> {
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 15,
-    color: Colors.white,
-  );
+  // static const TextStyle optionStyle = TextStyle(
+  //   fontSize: 15,
+  //   color: Colors.black,
+  // );
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
@@ -46,29 +46,37 @@ class _BottomNaviState extends State<BottomNavi> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: optionStyle,
-        unselectedLabelStyle: optionStyle,
+        // selectedLabelStyle: optionStyle,
+        // unselectedLabelStyle: optionStyle,
         // showUnselectedLabels: true,
+
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+
+        type: BottomNavigationBarType.fixed,
+
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff7286D3),
-            icon: Icon(Ionicons.home_outline),
-            label: 'HOME',
+            backgroundColor: Colors.white,
+            icon: Icon(Ionicons.home_sharp,),
+            label: '',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff82AAE3),
-            icon: Icon(Ionicons.bookmark_outline),
-            label: 'BIBLE',
+            backgroundColor: Colors.white,
+            icon: Icon(Ionicons.bookmark_sharp,),
+            label: '',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff144272),
-            icon: Icon(Ionicons.calendar_clear_outline),
-            label: 'MONTH',
+            backgroundColor: Colors.white,
+            icon: Icon(Ionicons.calendar_clear_sharp,),
+            label: '',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff6096B4),
-            icon: Icon(Ionicons.image_outline),
-            label: 'PHOTO',
+            backgroundColor: Colors.white,
+            icon: Icon(Ionicons.image_sharp,),
+            label: '',
           ),
         ],
         currentIndex: _selectedIndex,

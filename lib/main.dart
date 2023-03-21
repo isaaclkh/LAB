@@ -53,9 +53,7 @@ class MyApp extends StatelessWidget {
         title: "Pibo",
         theme: ThemeData(
         primaryColor: Colors.lightBlueAccent,
-        textTheme: const TextTheme(
-        bodyText1: TextStyle(color: Colors.black),
-        ),
+        fontFamily: 'Spoqa',
         backgroundColor: Colors.white,
         ),
         home: const OnBoardingPage(),
