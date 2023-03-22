@@ -83,6 +83,7 @@ flutter:
    - assets/cloud.png
    - assets/sun.png
    - assets/rain.png
+   - assets/no.png
    - assets/onboarding/robot_first.json
    - assets/onboarding/robot_talk.json
    - assets/onboarding/robot_talk2.json

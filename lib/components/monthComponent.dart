@@ -27,7 +27,7 @@ class _MonthComponentState extends State<MonthComponent> {
       builder: (context, appState, _){
         appState.getF(widget.date).then((value) => null);
         appState.getD(widget.date).then((value) => null);
-        return Container(
+        return SizedBox(
           height: 200,
           child: ListView.builder(
               itemCount: appState.fee.length,

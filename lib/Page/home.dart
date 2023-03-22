@@ -1,13 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:pibo/Functions/koreanJongSong.dart';
-import 'package:pibo/Page/getUserNamePage.dart';
 import 'package:pibo/Provider/appState.dart';
 import 'package:pibo/Provider/userProvider.dart';
-import 'package:pibo/components/categoryButtons.dart';
-import 'package:pibo/components/getTextField.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -46,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0.0,
         leadingWidth: 100,
         leading: IconButton(
-          icon: Icon(Ionicons.log_out_outline, color: Colors.black, size: 30,),
+          icon: const Icon(Ionicons.log_out_outline, color: Colors.black, size: 30,),
           tooltip: 'Logout',
           onPressed : (){
             UserProvider().updateCurrentUser("");
@@ -76,7 +72,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           //mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 40,),
+            const SizedBox(height: 20,),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -86,8 +82,8 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, appState, _){
                       appState.initializeCount();
 
-                      if(appState.noLast){
-                        return const Text('아직 나의 데이터가 없어요', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50,),);
+                      if(appState.noFeel){
+                        return const Text('아직 데이터가 없어요', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,),);
                       }
                       else{
                         return Text('${appState.onlyGood.length/appState.feelings.length * 100}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50,),);
@@ -133,8 +129,7 @@ class _HomePageState extends State<HomePage> {
                               appState.getLastDay();
 
                               if(appState.noLast){
-                                return Text('아직 데이터가 없어요',
-                                  style: TextStyle(fontSize: 15, color: Colors.grey.shade700),);
+                                return Container();
                               }
                               else{
                                 return Text('마지막 날짜 ${appState.last}',
@@ -173,45 +168,89 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
 
+            const SizedBox(height: 18,),
+
             Consumer<ApplicationState>(
               builder: (context, appState, _){
                 appState.initializeCount();
 
                 if(appState.noFeel){
-                  return Container();
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 110,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 35, right: 30, bottom: 10),
+                      child: Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey.shade100,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 10,),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Image.asset('assets/no.png', fit: BoxFit.fill,),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text('아직까지 데이터가 없어요.'),
+                                Text('파이보와 대화를 나누어보세요.'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                 }
 
                 else{
-                  List<String> order = [appState.onlyGood.length.toString(), appState.onlyNorm.toString(), appState.onlyBad.toString()];
+                  List<String> order = [appState.onlyGood.length.toString(), appState.onlyNorm.length.toString(), appState.onlyBad.length.toString()];
                   List<String> imgIcons = ['assets/sun.png', 'assets/cloud.png', 'assets/rain.png'];
-                  List<String> wording = ['행복했', '그냥 그랬', '슬펐'];
+                  List<String> wording = ['행복했', '그냥 그랬', '별로였'];
 
-                  return Container(
+                  return SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    height: 320,
+                    height: 330,
                     child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: 3,
                       itemBuilder: (context, index){
-                        return Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.grey.shade200,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(imgIcons[index]),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('지금까지 ${wording[index]}을 때'),
-                                  Text('총 ${appState.feelings.length}번 중에 ${appState.onlyGood.length}번'),
-                                ],
-                              ),
-                            ],
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                          child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.shade100,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(width: 30,),
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: Image.asset(imgIcons[index], fit: BoxFit.fill,),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('지금까지 ${wording[index]}을 때'),
+                                    Text('총 ${appState.feelings.length}번 중에 ${order[index]}번'),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }
@@ -220,128 +259,6 @@ class _HomePageState extends State<HomePage> {
                 }
               }
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 150,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.only(left : 8),
-                          child: Text(
-                              '나의 활동',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
-                          ),
-                      ),
-                      const SizedBox(height: 10,),
-                      Container(
-                        height: 80,
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black,),
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20,),
-                            child: Row(
-                              children: [
-                                Consumer<ApplicationState>(
-                                  builder: (context, appState, _){
-                                    appState.initializeCount();
-
-                                    if(appState.noF){
-                                      return const Text('아직 파이보와 대화한적인 없어요 ㅠㅠ',
-                                        style: TextStyle(fontSize: 17,),);
-                                    }
-                                    else{
-                                      return Text('파이보와 마지막으로\n${appState.last}에  이야기 나누었어요!',
-                                        style: const TextStyle(fontSize: 17,),);
-                                    }
-                                  }
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width * 0.8,
-            //   height: 200,
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.start,
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       const Padding(
-            //         padding: EdgeInsets.only(left : 8),
-            //         child: Text(
-            //           '현재까지 나의 현황',
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.bold,
-            //             fontSize: 17,
-            //           ),
-            //         ),
-            //       ),
-            //       const SizedBox(height: 10,),
-            //       Container(
-            //         height: 150,
-            //         width: MediaQuery.of(context).size.width * 0.8,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(20),
-            //           color: Colors.white,
-            //           border: Border.all(color: Colors.black,),
-            //         ),
-            //         child: Align(
-            //           alignment: Alignment.centerLeft,
-            //           child: Padding(
-            //             padding: const EdgeInsets.only(left: 20,),
-            //             child: Consumer<ApplicationState>(
-            //                 builder: (context, appState, _){
-            //                   appState.initializeCount();
-            //
-            //                   if(appState.noLast){
-            //                     return const Text('아직 나의 데이터가 없어요, 파이보와 더 친해져 보아요 :)');
-            //                   }
-            //                   else{
-            //                     return Column(
-            //                       mainAxisAlignment: MainAxisAlignment.center,
-            //                       crossAxisAlignment: CrossAxisAlignment.start,
-            //                       children: [
-            //                         Text('총 ${appState.feelings.length}번 감정분석을 했어요!', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17,),),
-            //                         const SizedBox(height: 10,),
-            //                         Text('지금까지 행복했을 때 : ${appState.onlyGood.length}',  style: TextStyle(fontSize: 17,),),
-            //                         Text('지금까지 슬펐을 때 : ${appState.onlyBad.length}',  style: TextStyle(fontSize: 17,),),
-            //                         Text('지금까지 그냥그랬을 때 : ${appState.onlyNorm.length}', style: TextStyle(fontSize: 17,),),
-            //                       ],
-            //                     );
-            //                   }
-            //                 }
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
-            //const SizedBox(height: 10,),
-
           ],
         ),
       ),
