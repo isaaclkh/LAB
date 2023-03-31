@@ -45,6 +45,9 @@ class ApplicationState extends ChangeNotifier{
   List<Bible> _bible = [];
   List<Bible> get bible => _bible;
 
+  List<String> _bibleDates = [];
+  List<String> get bibleDates => _bibleDates;
+
   List<Photos> _photos = [];
   List<Photos> get photos => _photos;
 
@@ -183,6 +186,9 @@ class ApplicationState extends ChangeNotifier{
               address : document.data()['주소'] as String,
               words: document.data()['말씀'] as String,
             ),
+          );
+          _bibleDates.add(
+            document.id,
           );
         }
       }

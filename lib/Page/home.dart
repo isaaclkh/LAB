@@ -245,8 +245,8 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('지금까지 ${wording[index]}을 때'),
-                                    Text('총 ${appState.feelings.length}번 중에 ${order[index]}번'),
+                                    Text('지금까지 ${wording[index]}을 때', style: TextStyle(fontSize: 15,),),
+                                    Text('총 ${appState.feelings.length}번 중에 ${order[index]}번', style: TextStyle(fontSize: 15,),),
                                   ],
                                 ),
                               ],
