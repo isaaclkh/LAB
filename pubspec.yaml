@@ -51,6 +51,7 @@ dependencies:
   calendar_appbar: ^0.0.6
   http: ^0.13.5
   openai_client: ^0.0.7
+  flip_card: ^0.7.0
 
 dev_dependencies:
   flutter_test:

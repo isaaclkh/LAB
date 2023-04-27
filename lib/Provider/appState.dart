@@ -197,6 +197,17 @@ class ApplicationState extends ChangeNotifier{
     });
   }
 
+  Future<void> removeBible(int index) async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    getBible();
+
+    FirebaseFirestore.instance.collection("users").doc(userName).collection("성경").doc(_bibleDates[index]).delete().then(
+      (doc) => print("Document deleted"),
+      onError: (e) => print("Error updating document $e"),
+    );
+
+  }
+
   Future<void> getPhoto() async{
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
