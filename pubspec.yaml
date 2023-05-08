@@ -52,6 +52,9 @@ dependencies:
   http: ^0.13.5
   openai_client: ^0.0.7
   flip_card: ^0.7.0
+  photo_view: ^0.14.0
+  cached_network_image: ^3.2.3
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:

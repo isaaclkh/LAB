@@ -1,9 +1,13 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
+import 'package:pibo/Page/pictureZoom.dart';
 import 'package:pibo/Provider/appState.dart';
 import 'package:pibo/main.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Pictures extends StatefulWidget {
   const Pictures({Key? key}) : super(key: key);
@@ -34,13 +38,28 @@ class _PicturesState extends State<Pictures> {
                 ),
                 itemCount: appState.photos.length,
                 itemBuilder: (context, index) {
-                  String name = '$userName${appState.photos[index].time}.jpg';
 
-                  return SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image.network(
-                      appState.photos[index].url, fit: BoxFit.fitHeight,),
+                  Uri url;
+                  url = Uri.parse(appState.photos[index].url);
+                  return InkWell(
+                    onTap: () async =>{
+                      if(await canLaunchUrl(url)){
+                        launchUrl(url),
+                        print(appState.photos[index].url),
+                      }
+                      else{
+                        print("Can't launch $url"),
+                      }
+                      //print('url : ${appState.photos[index].url}'),
+                      //Navigator.push(context, MaterialPageRoute(builder:
+                      //(context) => PictureZoom(url: appState.photos[index].url,))),
+                    },
+                    child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Image.network(
+                        appState.photos[index].url, fit: BoxFit.fitHeight,),
+                    ),
                   );
                 }
               ),
