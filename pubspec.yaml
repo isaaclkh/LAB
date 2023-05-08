@@ -102,19 +102,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-   - family: Spoqa
-     fonts:
-       - asset: assets/fonts/SpoqaHanSansNeo-Regular.otf
-         weight: 400
-       - asset: assets/fonts/SpoqaHanSansNeo-Bold.otf
-         weight: 700
-       - asset: assets/fonts/SpoqaHanSansNeo-light.otf
-         weight: 300
-       - asset: assets/fonts/SpoqaHanSansNeo-Medium.otf
-         weight: 500
-       - asset: assets/fonts/SpoqaHanSansNeo-Thin.otf
-         weight: 100
+#  fonts:
+#   - family: Spoqa
+#     fonts:
+#       - asset: assets/fonts/SpoqaHanSansNeo-Regular.otf
+#         weight: 400
+#       - asset: assets/fonts/SpoqaHanSansNeo-Bold.otf
+#         weight: 700
+#       - asset: assets/fonts/SpoqaHanSansNeo-light.otf
+#         weight: 300
+#       - asset: assets/fonts/SpoqaHanSansNeo-Medium.otf
+#         weight: 500
+#       - asset: assets/fonts/SpoqaHanSansNeo-Thin.otf
+#         weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

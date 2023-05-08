@@ -86,7 +86,9 @@ class _HomePageState extends State<HomePage> {
                         return const Text('아직 데이터가 없어요', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,),);
                       }
                       else{
-                        return Text('${appState.onlyGood.length/appState.feelings.length * 100}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50,),);
+                        var score = appState.onlyGood.length/appState.feelings.length * 100;
+
+                        return Text('${score.round()}%', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50,),);
                       }
                     }
                 ),

@@ -34,8 +34,8 @@ class BibleList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10,),
-                          Padding(padding: EdgeInsets.only(left: 30, top: 20, bottom: 5,),
-                            child: Text(appState.bibleDates[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,),),
+                          Padding(padding: const EdgeInsets.only(left: 30, top: 20, bottom: 5,),
+                            child: Text(appState.bibleDates[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15,),),
                           ),
 
                           Padding(
