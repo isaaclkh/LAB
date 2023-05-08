@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pibo/Page/bibleList.dart';
 import 'package:pibo/Page/onBoardingPage.dart';
 import 'package:pibo/Provider/appState.dart';
@@ -74,30 +74,5 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
-
-    // return MaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   title: "Pibo",
-    //   theme: ThemeData(
-    //     primaryColor: Colors.lightBlueAccent,
-    //     textTheme: const TextTheme(
-    //       bodyText1: TextStyle(color: Colors.black),
-    //     ),
-    //     backgroundColor: Colors.white,
-    //   ),
-    //   home: const GetUserNamePage(),
-    //   // LoginStream().handleAuthState(),
-    //   // ProfilePage(),
-    //
-    //   initialRoute: '/',
-    //   routes: {
-    //     // '/splash/init': (context) => const InitPage(),
-    //     '/bibleList' : (context) => const BibleList(),
-    //     '/pictures' : (context) => const Pictures(),
-    //     '/home' : (context) => const HomePage(),
-    //     '/diary' : (context) => const Diary(),
-    //     '/feeling' : (context) => const Feeling(),
-    //   },
-    // );
   }
 }
