@@ -9,6 +9,8 @@ import 'package:pibo/main.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../components/qr.dart';
+
 class Pictures extends StatefulWidget {
   const Pictures({Key? key}) : super(key: key);
 
@@ -42,6 +44,19 @@ class _PicturesState extends State<Pictures> {
                   Uri url;
                   url = Uri.parse(appState.photos[index].url);
                   return InkWell(
+                    onDoubleTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true, // 바깥 영역 터치시 닫을지 여부
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: QR(url : url.toString()),
+                            insetPadding: const  EdgeInsets.fromLTRB(0,100,0, 100),
+                          );
+                        }
+                      );
+                    },
+
                     onTap: () async =>{
                       if(await canLaunchUrl(url)){
                         launchUrl(url),

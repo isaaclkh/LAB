@@ -35,7 +35,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       pageBackgroundColor: Colors.white,
       background: [
         SizedBox(
-          height: 400,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*0.4,
           child: Lottie.asset('assets/onboarding/robot_first.json'),
         ),
         // Image.asset(
@@ -43,8 +44,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         //   height: 400,
         // ),
         SizedBox(
-          height: 500,
-          width: 380,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*0.4,
           child: Center(child: Lottie.asset('assets/onboarding/robot_talk.json')),
         ),
         // Image.asset(
@@ -52,7 +53,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         //   height: 400,
         // ),
         SizedBox(
-          height: 400,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*0.4,
           child: Lottie.asset('assets/onboarding/robot_last.json'),
         ),
         // Image.asset(
@@ -84,7 +86,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 height: 20,
               ),
               const Text(
-                '나는 휴머노이드, 은쪽이야\n파이썬을 통해서 내 안에 있는 \n라즈베리파이와 연결하여 개발 가능해!',
+                '\n나는 휴머노이드, 은쪽이야\n파이썬을 통해서 내 안에 있는 \n라즈베리파이와 연결하여 개발 가능해!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
@@ -117,7 +119,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 height: 20,
               ),
               const Text(
-                '너가 해준 말을 통해서 감정 헤아려보고,\n그에 걸맞는 활동을 같이 할 수 있어\n심지어 성경 추천도 해줄 수 있어',
+                '\n너가 해준 말을 통해서 감정 헤아려보고,\n그에 걸맞는 활동을 같이 할 수 있어\n심지어 성경 추천도 해줄 수 있어',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
@@ -150,7 +152,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 height: 20,
               ),
               const Text(
-                '준비 되었으면 아래 시작 버튼을 통해서\n너의 이름을 알려줘!',
+                '\n준비 되었으면 아래 시작 버튼을 통해서\n너의 이름을 알려줘!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:pibo/Functions/koreanJongSong.dart';
+import 'package:pibo/Page/chatting.dart';
 import 'package:pibo/Provider/appState.dart';
 import 'package:pibo/Provider/userProvider.dart';
 import 'package:provider/provider.dart';
@@ -50,15 +51,23 @@ class _HomePageState extends State<HomePage> {
           }
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(top: 20, right: 20, bottom: 15,),
-            child: Container(
-              width: 55,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: SizedBox.fromSize(
-                  size: Size.fromRadius(48),
-                  child: Image.asset('assets/piboAppBar.jpeg', fit: BoxFit.fitWidth,),
+          InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context)=> Chatting(),
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 20, right: 20, bottom: 15,),
+              child: Container(
+                width: 80,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: SizedBox.fromSize(
+                    size: Size.fromRadius(50),
+                    child: Image.asset('assets/piboAppBar.jpeg', fit: BoxFit.fitWidth,),
+                  ),
                 ),
               ),
             ),

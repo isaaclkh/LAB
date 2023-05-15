@@ -4,53 +4,52 @@
 // import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:pibo/Functions/parsingComment.dart';
 import 'package:pibo/components/filpCard.dart';
 
 class BiblePage extends StatefulWidget {
-  const BiblePage(this.words, this.address, {Key? key}) : super(key: key);
+  const BiblePage(this.words, this.address, this.comment, {Key? key}) : super(key: key);
 
   final String words;
   final String address;
+  final String comment;
   @override
   State<BiblePage> createState() => _BiblePageState();
 }
 
 class _BiblePageState extends State<BiblePage> {
-  String? image = '';
+
   @override
   Widget build(BuildContext context) {
     String text = widget.words;
 
-    _backgrounding() {
-      return Container(
-        decoration: BoxDecoration(color: const Color(0xFFFFFFFF)),
-      );
-    }
-
     return Scaffold(
-      backgroundColor: Colors.black45,
       appBar: AppBar(
-        title: Text(widget.address),
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+        title: Text(ParsingComment().parse(widget.address)),
+        centerTitle: true,
+        backgroundColor: const Color(0xff146C94),
       ),
-      
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          _backgrounding(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: FilpCard(widget.address, widget.words),
+
+      body: Center(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Column(
+            children: [
+              Spacer(flex: 1,),
+              Container(
+                child: Text(widget.words, style: TextStyle(fontSize: 50),),
               ),
-              Expanded(
-                flex: 1,
-                child: Container(),
+              const SizedBox(height: 100,),
+              Container(
+                // ignore: prefer_interpolation_to_compose_strings
+                child: Text('파이보 : ' + ParsingComment().extractSpecial(widget.comment), style: TextStyle(fontSize: 30,),),
               ),
+              Spacer(flex: 2,),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

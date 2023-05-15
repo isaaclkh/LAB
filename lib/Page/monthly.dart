@@ -36,53 +36,59 @@ class _MonthlyState extends State<Monthly> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
         title: Text('CALENDAR'),
         centerTitle: true,
         backgroundColor: Color(0xff579BB1),
       ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TableCalendar(
-              firstDay: DateTime.now().subtract(Duration(days: 365*10 + 2)),
-              lastDay: DateTime.now().add(Duration(days: 365*10 + 2)),
-              focusedDay: _focusedDay,
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-
-                print(selectedDay.toString().split(" ",)[0]);
-              },
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-              calendarFormat: _calendarFormat,
-              onFormatChanged: (format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              },
-              calendarBuilders: CalendarBuilders( // Custom ui
-                dowBuilder: (context, day) {
-                  if (day.weekday == DateTime.sunday || day.weekday == DateTime.saturday) {
-                    final text = DateFormat.E().format(day);
-                    return Center(
-                      child: Text(
-                        text,
-                        style: day.weekday == DateTime.sunday ? TextStyle(color: Colors.red) : TextStyle(color: Colors.blue),
-                      ),
-                    );
-                  }
+            const SizedBox(height: 30,),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.95,
+              child: TableCalendar(
+                firstDay: DateTime.now().subtract(Duration(days: 365*10 + 2)),
+                lastDay: DateTime.now().add(Duration(days: 365*10 + 2)),
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDay, day);
                 },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+
+                  print(selectedDay.toString().split(" ",)[0]);
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
+                calendarFormat: _calendarFormat,
+                onFormatChanged: (format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                },
+                calendarBuilders: CalendarBuilders( // Custom ui
+                  dowBuilder: (context, day) {
+                    if (day.weekday == DateTime.sunday || day.weekday == DateTime.saturday) {
+                      final text = DateFormat.E().format(day);
+                      return Center(
+                        child: Text(
+                          text,
+                          style: day.weekday == DateTime.sunday ? TextStyle(color: Colors.red) : TextStyle(color: Colors.blue),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
-            const Divider(color: Colors.black),
+            const SizedBox(height: 50,),
+            const Divider(color: Colors.grey),
             MonthComponent(date: _selectedDay.toString().split(" ",)[0]),
           ],
         ),

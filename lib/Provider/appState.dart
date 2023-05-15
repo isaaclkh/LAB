@@ -185,6 +185,7 @@ class ApplicationState extends ChangeNotifier{
             Bible(
               address : document.data()['주소'] as String,
               words: document.data()['말씀'] as String,
+              comment: document.data()['조언'] as String,
             ),
           );
           _bibleDates.add(
@@ -205,6 +206,25 @@ class ApplicationState extends ChangeNotifier{
       (doc) => print("Document deleted"),
       onError: (e) => print("Error updating document $e"),
     );
+
+    FirebaseFirestore.instance.collection("users").doc(userName).collection("성경").snapshots().listen((snapshot) {
+      notifyListeners();
+    });
+
+  }
+
+  Future<void> addBible(int index, String address, String word, String comment) async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+    Bible bib = Bible(address: address, words: word, comment: comment);
+    CollectionReference bibleRef = FirebaseFirestore.instance.collection("users").doc(userName).collection("성경");
+    bibleRef.doc(_bibleDates[index]).set(bib).then((doc) => print("Undo"), onError: (e) => print("Error undo $e"),);
+
+    getBible();
+
+    FirebaseFirestore.instance.collection("users").doc(userName).collection("성경").snapshots().listen((snapshot) {
+      notifyListeners();
+    });
 
   }
 
