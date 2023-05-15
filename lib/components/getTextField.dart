@@ -30,7 +30,7 @@ class _GetTextFieldState extends State<GetTextField> {
         String korean = base64.encode(utf8.encode(msg));
 
         socket.send(korean.codeUnits,
-            InternetAddress("192.168.0.155"), port);
+            InternetAddress("192.168.137.150"), port);
         print(msg);
         print(msg.codeUnits);
       });
@@ -44,7 +44,7 @@ class _GetTextFieldState extends State<GetTextField> {
         print('Sending from ${socket.address.address}:${socket.port}');
         int port = 20001;
         socket.send('close'.codeUnits,
-            InternetAddress("192.168.0.155"), port);
+            InternetAddress("192.168.137.150"), port);
       });
     });
   }
