@@ -32,12 +32,12 @@ class _BiblePageState extends State<BiblePage> {
       ),
 
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width * 0.8,
           child: Column(
             children: [
-              Spacer(flex: 1,),
+              const Spacer(flex: 1,),
               Container(
                 child: Text(widget.words, style: TextStyle(fontSize: 50),),
               ),
@@ -46,7 +46,7 @@ class _BiblePageState extends State<BiblePage> {
                 // ignore: prefer_interpolation_to_compose_strings
                 child: Text('파이보 : ' + ParsingComment().extractSpecial(widget.comment), style: TextStyle(fontSize: 30,),),
               ),
-              Spacer(flex: 2,),
+              const Spacer(flex: 2,),
             ],
           ),
         ),

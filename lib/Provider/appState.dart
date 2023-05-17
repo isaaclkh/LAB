@@ -181,6 +181,7 @@ class ApplicationState extends ChangeNotifier{
         _bible = [];
 
         for(final document in snapshot.docs){
+
           _bible.add(
             Bible(
               address : document.data()['주소'] as String,
@@ -188,6 +189,7 @@ class ApplicationState extends ChangeNotifier{
               comment: document.data()['조언'] as String,
             ),
           );
+
           _bibleDates.add(
             document.id,
           );
