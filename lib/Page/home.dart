@@ -59,14 +59,18 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.only(top: 20, right: 20, bottom: 15,),
-              child: Container(
-                width: 80,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: SizedBox.fromSize(
-                    size: Size.fromRadius(50),
-                    child: Image.asset('assets/piboAppBar.jpeg', fit: BoxFit.fitWidth,),
+              padding: EdgeInsets.only(top: 30, right: 25, bottom: 40,),
+              child: InkWell(
+                onTap: ()=>Navigator.of(context).pushNamed('/fromPibo'),
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: SizedBox.fromSize(
+                      size: Size.fromRadius(50),
+                      child: Image.asset('assets/piboAppBar.jpeg', fit: BoxFit.fill),
+                    ),
                   ),
                 ),
               ),

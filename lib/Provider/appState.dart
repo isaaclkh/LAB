@@ -8,7 +8,9 @@ import 'package:pibo/main.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../Model/fromPibo.dart';
 import '../Model/photoModel.dart';
+import '../Model/toPibo.dart';
 import '../firebase_options.dart';
 import '../Model/bibleModel.dart';
 import '../Model/diaryModel.dart';
@@ -51,8 +53,20 @@ class ApplicationState extends ChangeNotifier{
   List<Photos> _photos = [];
   List<Photos> get photos => _photos;
 
+  List<ToPibo> _toPibo = [];
+  List<ToPibo> get toPibo => _toPibo;
+
+  List<FromPibo> _fromPibo = [];
+  List<FromPibo> get fromPibo => _fromPibo;
+
   bool _noFeel = true;
   bool get noFeel => _noFeel;
+
+  bool _noFromPibo = true;
+  bool get noFromPibo => _noFromPibo;
+
+  bool _noToPibo = true;
+  bool get noToPibo => _noToPibo;
 
   bool _noDiary = true;
   bool get noDiary => _noDiary;
@@ -165,6 +179,56 @@ class ApplicationState extends ChangeNotifier{
     });
 
     notifyListeners();
+  }
+
+  Future<void> ffromPibo() async {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    //print('provider '+date);
+
+    FirebaseFirestore.instance.collection("connectwithpibo").doc("fromPibo").snapshots().listen((snapshot) {
+      if(snapshot.exists){
+        _noFromPibo = false;
+        _fromPibo = [];
+        _fromPibo.add( FromPibo( msg : snapshot.get('msg'), ),
+        );
+      }
+      else{
+        _noFromPibo = true;
+        _fromPibo = [];
+      }
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> ttromPibo() async {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    //print('provider '+date);
+
+    FirebaseFirestore.instance.collection("connectwithpibo").doc("toPibo").snapshots().listen((snapshot) {
+      if(snapshot.exists){
+        _noToPibo = false;
+        _toPibo = [];
+        _toPibo.add( ToPibo( msg : snapshot.get('msg'), ),
+        );
+      }
+      else{
+        _noToPibo = true;
+        _toPibo = [];
+      }
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> addttromPibo(String message) async {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+    ToPibo toPibo = ToPibo(msg: message);
+    CollectionReference piboRef = FirebaseFirestore.instance.collection("connectwithpibo");
+    await piboRef.doc('toPibo').set(toPibo);
+
+    ttromPibo();
   }
 
   Future<void> getBible() async{

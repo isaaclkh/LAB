@@ -1,5 +1,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pibo/Page/bibleList.dart';
+import 'package:pibo/Page/chatting.dart';
+import 'package:pibo/Page/getFromPibo.dart';
 import 'package:pibo/Page/onBoardingPage.dart';
 import 'package:pibo/Provider/appState.dart';
 import 'package:provider/provider.dart';
@@ -71,6 +73,8 @@ class MyApp extends StatelessWidget {
           '/initial' : (context) => const BottomNavi(),
           '/onboarding' : (context) => const OnBoardingPage(),
           '/username' : (context) => const GetUserNamePage(),
+          '/chatting' : (context) => const Chatting(),
+          '/fromPibo' : (context) => const GetFromPibo(),
         },
       ),
     );
