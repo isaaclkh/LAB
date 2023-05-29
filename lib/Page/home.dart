@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.only(top: 30, right: 25, bottom: 40,),
+              padding: EdgeInsets.only(top: 15, right: 25, bottom: 20,),
               child: InkWell(
                 onTap: ()=>Navigator.of(context).pushNamed('/fromPibo'),
                 child: SizedBox(

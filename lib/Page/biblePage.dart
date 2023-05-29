@@ -39,12 +39,12 @@ class _BiblePageState extends State<BiblePage> {
             children: [
               const Spacer(flex: 1,),
               Container(
-                child: Text(widget.words, style: TextStyle(fontSize: 50),),
+                child: Text(widget.words, style: TextStyle(fontSize: 20),),
               ),
-              const SizedBox(height: 100,),
+              const SizedBox(height: 30,),
               Container(
                 // ignore: prefer_interpolation_to_compose_strings
-                child: Text('파이보 : ' + ParsingComment().extractSpecial(widget.comment), style: TextStyle(fontSize: 30,),),
+                child: Text('파이보 : ' + ParsingComment().extractSpecial(widget.comment), style: TextStyle(fontSize: 20,),),
               ),
               const Spacer(flex: 2,),
             ],
