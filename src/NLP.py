@@ -24,18 +24,17 @@ class Dictionary:
         self.Fruit = ['사과', '딸기', '복숭아', '포도', '귤', '오렌지', '감', '파인애플', '자두', '청포도', '바나나', '망고', '수박',
                         '배','참외', '앵두', '']
 
-        self.One = ['1', '일', '첫']
+        self.One = ['1', '일', '첫', '1번']
 
-        self.Two = ['2', '이', '두']
+        self.Two = ['2', '이', '두', '2번']
 
-        self.Three = ['3', '삼', '세']
+        self.Three = ['3', '삼', '세', '3번']
 
         self.Number = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
         self.Number_word = ['영', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구', '십']
 
         self.Wrong = ['땡', '틀렸어', '아니', '아닌']
-
 
 class NLP:
     def __init__(self):
@@ -67,7 +66,6 @@ class NLP:
                 answer = 'AGAIN'
         print(answer)
         return answer
-
 
     def nlp_animal(self, user_said, dic):
         """

@@ -5,6 +5,7 @@ from src.text_to_speech import TextToSpeech
 import openpibo
 from openpibo.oled import Oled
 from src.activity.music_get import YoutubeAudioDownload
+from src.data import behavior_list
 
 o = Oled()
 NLP = NLP()
@@ -19,6 +20,21 @@ def sadsong() :
         text_to_speech("어떤 장르 좋아해? 팝송? 인디? 발라드? 아니면 힙합?")
         mus = stt()
         
+        if '힙합' in mus:
+            mus = '힙합'
+        if '팝송' in mus:
+            mus = '팝송'
+        if '락' in mus:
+            mus = '락'
+        if '케이팝' in mus:
+            mus = '케이팝'
+        if '제이팝' in mus:
+            mus = '제이팝'
+        if '인디' in mus:
+            mus = '인디'
+        if '발라드' in mus:
+            mus = '발라드'
+
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'NO':
             text_to_speech("그럼 내가 노래 하나 추천해 줄까?")
         else : 
@@ -27,17 +43,16 @@ def sadsong() :
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("그래 노래 틀어줄게.")
-            text_to_speech("내가 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
+            text_to_speech("그래, 내가 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
 
-            fileN = YoutubeAudioDownload(mus)
+            fileN = YoutubeAudioDownload(f'슬픈{mus}')
 
             if fileN is "CANNOT":
                 text_to_speech("미안, 너가 원하는 노래를 유튜브에 검색했는데, 틀 수 있는게 없어.")
             else :
                 audio.play(filename=fileN, out='local', volume=-2000, background=False)
 
-            text_to_speech("내 선곡 어땠어? 위로가 됐으면 하는데..")
+            text_to_speech("위로가 됐으면 하는데 어땠어?")
             
             ans = stt()
             if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES':
@@ -60,7 +75,7 @@ def medy() :
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
         text_to_speech("너가 좋다니 다행이다~ 다음에도 나랑 명상하자.")
 
-    else NLP.nlp_answer(user_said=ans, dic=Dic) == 'NO' :
+    else :
         text_to_speech("이런.. 다음에는 더 좋은 활동을 해보자.")
 
 def drawing() :
@@ -98,9 +113,9 @@ def drawing() :
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
             text_to_speech("다행이다. 나는 일기를 쓰면 마음이 편해지고 기억에 남는 일들을 기록하며 성장하는 느낌이 들더라고. 앞으로 너도 일기 꾸준히 써봐.")
 
-        else NLP.nlp_answer(user_said=ans, dic=Dic) == 'NO' :
+        else :
             text_to_speech("이런. 일기 쓰는것이 별로였구나. 다음엔 다른 활동 하자.")
 
 
-    else NLP.nlp_answer(user_said=ans, dic=Dic) == 'NO' :
+    else :
         text_to_speech("알겠어, 일기 그리고 싶지 않구나.")

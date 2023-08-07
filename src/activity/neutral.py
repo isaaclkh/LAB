@@ -3,6 +3,8 @@ from src.textFinal import text_to_speech, stt, lstt
 from src.NLP import NLP, Dictionary
 from src.text_to_speech import TextToSpeech
 from src.activity.music_get import YoutubeAudioDownload
+from src.data import behavior_list
+
 
 NLP = NLP()
 Dic = Dictionary()
@@ -15,6 +17,21 @@ def midsong() :
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
         text_to_speech("어떤 장르 좋아해? 팝송? 인디? 발라드? 아니면 힙합?")
         mus = stt()
+
+        if '힙합' in mus:
+            mus = '힙합'
+        if '팝송' in mus:
+            mus = '팝송'
+        if '락' in mus:
+            mus = '락'
+        if '케이팝' in mus:
+            mus = '케이팝'
+        if '제이팝' in mus:
+            mus = '제이팝'
+        if '인디' in mus:
+            mus = '인디'
+        if '발라드' in mus:
+            mus = '발라드'
         
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'NO':
             text_to_speech("그럼 내가 노래 하나 추천해 줄까?")
@@ -24,8 +41,7 @@ def midsong() :
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("그래 노래 틀어줄게.")
-            text_to_speech("내가 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
+            text_to_speech("그래, 내가 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
 
             fileN = YoutubeAudioDownload(mus)
 
@@ -43,6 +59,9 @@ def midsong() :
                 text_to_speech("미안해, 다음에는 좋은 노래를 추천해줄게")
         else :
             text_to_speech("알겠어, 그럼 노래를 틀지 않을게.")
+    
+    else:
+        text_to_speech("그렇구나.")
 
 
 def midtalk() :

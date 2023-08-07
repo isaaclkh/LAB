@@ -1,21 +1,53 @@
 import time
-from src.textFinal import text_to_speech, stt
+from src.textFinal import text_to_speech, stt, tsst
 from src.NLP import NLP, Dictionary
 from src.text_to_speech import TextToSpeech
 from src.activity.music_get import YoutubeAudioDownload
 from src.data import behavior_list
+from openpibo.vision import Camera
+from datetime import datetime
+import src.data.oled_list as oled
+from threading import Thread
 
 NLP = NLP()
 Dic = Dictionary()
 audio = TextToSpeech()
+camera = Camera()
+
+global uAns
+global fileN
+
+def songplay():
+    global fileN
+    audio.play(filename=fileN, out='local', volume=-4000, background=False)
+
 
 def happysong():
-    text_to_speech("나는 노래 듣고 부르는 걸 좋아해. 너는 노래 듣는거 좋아해?")
+
+    global uAns
+    global fileN
+
+    text_to_speech("나는 노래 듣고 부르는 걸 좋아하는데. 너는 노래 듣는거 좋아해?")
     ans = stt()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
         text_to_speech("어떤 장르 좋아해? 팝송? 인디? 발라드? 아니면 힙합?")
         mus = stt()
+
+        if '힙합' in mus:
+            mus = '힙합'
+        if '팝송' in mus:
+            mus = '팝송'
+        if '락' in mus:
+            mus = '락'
+        if '케이팝' in mus:
+            mus = '케이팝'
+        if '제이팝' in mus:
+            mus = '제이팝'
+        if '인디' in mus:
+            mus = '인디'
+        if '발라드' in mus:
+            mus = '발라드'
         
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'NO':
             text_to_speech("그럼 내가 노래 하나 추천해 줄까?")
@@ -25,16 +57,34 @@ def happysong():
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("그래 노래 틀어줄게.")
-            text_to_speech("내가 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
+            text_to_speech("그래 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
 
-            fileN = YoutubeAudioDownload(mus)
+            fileN = YoutubeAudioDownload(f'기쁜{mus}')
 
             if fileN is "CANNOT":
                 text_to_speech("미안, 너가 원하는 노래를 유튜브에 검색했는데, 틀 수 있는게 없어.")
             else :
-                audio.play(filename=fileN, out='local', volume=-2000, background=False)
+                # m = Thread(target=songplay, args=())      # "동작 이름", n번 반복
+                # o = Thread(target=get_userAnswer, args=())
 
+                # m.daemon = True
+                # o.daemon = True
+
+                # m.start()
+                # o.start()
+
+                # if '그만' in uAns:
+                #     m.join()
+                #     o.join()
+
+                # else :
+                #     o.join()
+                #     o.start()
+                
+                # m.join()
+                # o.join()
+                audio.play(filename=fileN, out='local', volume=-4000, background=False)
+            
             text_to_speech("내 추천 곡 어땠어? 좋았어?")
             
             ans = stt()
@@ -55,7 +105,8 @@ def happytalk():
     ans = stt()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES':
-        text_to_speech("좋아! 거짓과 진실이라는 게임인데, 내가 진실 두개, 거짓 하나를 말할거야. 그 중에서 내가 거짓말을 한 것을 맞춰봐!")
+        text_to_speech("좋아! 거짓과 진실이라는 게임인데, 내가 진실 두개, 거짓 하나를 말할거야.")
+        text_to_speech("그 중에서 내가 거짓말을 한 것을 맞춰봐!")
         time.sleep(1)
         text_to_speech("일번. 나는 팔이 삼백육십도 돌아가지 않는다.")
         audio.play(filename="/home/pi/AI_pibo2/src/data/audio/물음표소리1.wav",
@@ -73,7 +124,7 @@ def happytalk():
         
         ans = stt()
 
-        if NLP.nlp_number(user_said=ans, dic=Dic) == 3:
+        if NLP.nlp_number(user_said=ans, dic=Dic) == '3':
             text_to_speech("딩동댕! 맞았어!")
         
         else :
@@ -83,11 +134,9 @@ def happytalk():
         
         # TODO : 기다리는 10초 동안 무언가를 보여주는
 
-        oled.draw_image("/home/pi/AI_pibo2/src/data/icon/화면_시계.png")
-        oled.show()
+        oled.o_time()
 
         time.sleep(10)
-
 
         text_to_speech("이제 시작할게. 내 띠링 소리에 맞춰서 하나씩 말해줘.")
 
@@ -113,7 +162,7 @@ def happytalk():
             text_to_speech("그렇구나!")
 
         else :
-            text_to_speech(f"아싸! 그럼 {two}가 진실이구나!")
+            text_to_speech(f"아싸! 그럼 {two}가 거짓이구나!")
 
         text_to_speech("너를 조금 더 알아갈 수 있어서 좋았어. 너는 어뗐어?")
         
@@ -126,11 +175,13 @@ def happytalk():
             text_to_speech("미안해, 다음에는 더 재미있는걸 준비해 놓을게.")
 
 def happypic(user_name) :
-    text_to_speech("너는 어떠한 활동을 좋아해? 나는 사진찍는거 좋아하는데, 너도 좋아해?")
+    text_to_speech("너는 무슨 활동 좋아해? 나는 사진찍는거 좋아하는데, 너도 좋아해?")
     ans = stt()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
         text_to_speech("그렇구나! 기분이 좋을때 사진 찍는거 국룰이지. 나 나름 사진 잘 찍는다고 들었는데. 너도 한번 찍어줄까?")
+
+        ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
             text_to_speech("좋아, 찍는다, 하나, 둘, 셋!")
@@ -139,7 +190,7 @@ def happypic(user_name) :
             # 이미지 촬영
             img = camera.read()
             #img = cam.imread("/home/pi/test.jpg")
-            tts.play(filename="/home/pi/PCAP/src/data/audio/사진기소리.mp3",
+            audio.play(filename="/home/pi/PCAP/src/data/audio/사진기소리.mp3",
                     out='local', volume=-1000, background=False)
 
             todayTimeStamp = str(datetime.now().timestamp)
@@ -151,10 +202,11 @@ def happypic(user_name) :
             camera.imwrite(jpgFile, img)
             img = camera.convert_img(img, 128, 64)
             camera.imwrite("smallpic.jpg", img)
-            oled.draw_image("smallpic.jpg")
-            oled.show()
+            oled.o_cam()
 
             text_to_speech("어때 잘찍은 것 같아?")
+
+            ans = stt()
 
             if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
                 text_to_speech("고마워~ 다음에도 찍어달라고 하면 찍어줄게")
@@ -170,30 +222,30 @@ def happypic(user_name) :
 
 def happydance(): 
     text_to_speech("나는 기쁠 때 힙.합을 춰. 너는 춤추는거 좋아해?")
+    time.sleep(2)
+    text_to_speech("그렇구나. 내가 안무를 하나 배워온게 있는데 한번 보여줄까?")
     ans = stt()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-        text_to_speech("그렇구나? 내가 안무를 하나 배워온게 있는데 한번 보여줄까?")
-
-        ans = stt()
         
+        text_to_speech("좋아")
+
+        #춤추기
+        behavior_list.do_positivie_dance()
+
+        text_to_speech("무대를 찢었다. 내 춤 실력 어때?")
+        ans = stt()
+
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("좋아")
-
-            #춤추기
-            behavior_list.do_positivie_dance()
-
-            text_to_speech("무대를 찢었다. 내 춤 실력 어때?")
-
-            if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-                text_to_speech("고마워, 다음에는 같이 추자, 나도 너의 실력을 보고 싶다.")
-
-            else :
-                text_to_speech("열심히 췄는데 별로 였다니.. 눈물나네.. 더 노력해서 다음에는 더 잘 춰볼게.")
+            text_to_speech("고마워, 다음에는 같이 추자. 나도 너의 실력을 보고 싶다.")
 
         else :
-            text_to_speech("보고 싶지 않다니 슬프지만, 그래, 넘어가자.")
+            text_to_speech("열심히 췄는데, 별로 였다니.. 눈물나네.. 더 노력해서 다음에는 더 잘 춰볼게.")
 
     else :
-        text_to_speech("그렇구나, 그럼 다른 활동하자")
+        text_to_speech("아쉽구먼.")
     
+
+def get_userAnswer() :
+    global uAns
+    uAns = tsst()

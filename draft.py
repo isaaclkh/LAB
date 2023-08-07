@@ -40,7 +40,7 @@ from src.textFinal import text_to_speech, stt
 from src.data import behavior_list
 import src.data.oled_list as oled
 
-from src.activity.positive import happysong, happytalk, happydance
+from src.activity.positive import happysong, happytalk, happydance, happypic
 from src.activity.negative import sadsong, medy, drawing
 from src.activity.neutral import midsong, midtalk
 
@@ -92,7 +92,7 @@ localPort = 20001
 user_name = '건호'
 
 device_obj.send_cmd(20, '0,0,0')  # 20 = eye, 0,0,0 = color rgb
-behavior_list.do_question_S("안녕! 나는 은쪽이라고 해, 만나서 반가워.")
+# behavior_list.do_question_S("안녕! 나는 은쪽이라고 해, 만나서 반가워.")
 # text_to_speech("시작하기 전에, 나와 연결을 먼저 해줘.")
 # # user_name = clientToServer(localIP, localPort)
 # text_to_speech(f"너의 이름은 {user_name}{lee(user_name)}구나! 만나서 반가워")
@@ -105,22 +105,117 @@ behavior_list.do_question_S("안녕! 나는 은쪽이라고 해, 만나서 반�
 # text_to_speech(f"{em}")
 # chatting(your_day)
 # oled.o_heart()
-midsong()
+
+happydef =[happysong, happytalk, happypic, happydance]
+
+ran = random.choice(happydef)
+
+if ran == happypic : 
+    ran(user_name)
+    happydef.remove(ran)
+else :
+    ran()
+    happydef.remove(ran)
+
+while len(happydef) != 0 :
+    text_to_speech("내가 다른 활동도 준비한 것이 있는데. 같이 해볼래?")
+    ans = stt()
+    
+    if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
+        ran = random.choice(happydef)
+
+        if ran == happypic : 
+            happypic(user_name)
+            happydef.remove(ran)
+            print("happydef : ", happydef)
+        
+        else :
+            ran()
+            happydef.remove(ran)
+            print("happydef : ", happydef)
+    
+    else :
+        happydef.clear()
+
+text_to_speech("끝")
 
 # if em == '긍정':
 #     happydef =[happysong, happytalk, happypic, happydance]
 
 #     ran = random.choice(happydef)
-#     ran()
+    
+#     if ran == happypic : 
+#         ran(user_name)
+#         happydef.remove(ran)
+#     else :
+#         ran()
+#         happydef.remove(ran)
+
+#     while happydef is not NULL :
+#         text_to_speech("내가 다른 활동도 준비한 것이 있는데. 같이 해볼래?")
+#         ans = stt()
+        
+#         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
+#             ran = random.choice(happydef)
+#             if ran == happypic : 
+#                 happypic(user_name)
+#                 happydef.remove(ran)
+#                 print("happydef : ", happydef)
+#             else :
+#                 happydef.revmoe(ran)
+#                 print("happydef : ", happydef)
+        
+#         else :
+#             happydef.clear()
+
+
+#     text_to_speech("너랑 이야기 하니까 기분이 좋아졌어! 너는 어때?")
+#     ans = stt()
+
+#     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
+#        text_to_speech("너가 좋았다고하니 너무 기쁜걸!")
+
+#        text_to_speech("너는 긍정적인 에너지가 넘치는 것 같아. 앞으로도 자주 이야기하자~")
+#        time.sleep(3)
+#        text_to_speech("오늘 너무 즐거웠어, 다음에 또 불러줘")
+#        time.sleep(3)
+#        text_to_speech("마지막으로 악수 하자, 잘가")
+
+#     else :
+#        text_to_speech("미안해, 앞으로 더 노력하는 내가 될게.")
 
 # elif em =='중립' :
 #     neutraldef = [midtalk, midsong]
 
 #     ran = random.choice(neutraldef)
 #     ran()
+#     text_to_speech("오늘 너랑 이야기할수 있어서 너무 좋았어. 너는 어땠어?")
+#     ans = stt()
+
+#     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
+#        text_to_speech("고마워, 나의 마음이 너에게 닿아서 다행이야!")
+
+#        text_to_speech("언제든지 이야기 나누고 싶을 때 불러줘. 친구야! ")
+#        time.sleep(3)
+#        text_to_speech("마지막으로 악수 하자, 잘가")
+
+#     else :
+#        text_to_speech("미안해, 앞으로 더 노력하는 내가 될게.")
 
 # else em == '부정' :
 #     saddef = [sadsong, medy, drawing]
 
 #     ran = random.choice(saddef)
 #     ran()
+#     text_to_speech("오늘은 조금 감정적으로 힘들었던 하루였네. 이런 시기도 지나가기 마련이야. 그래도 나랑 함께해서 조금 괜찮아지지 않았어?")
+#     ans = stt()
+
+#     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
+#        text_to_speech("고마워, 나의 마음이 너에게 닿아서 다행이야!")
+
+#        text_to_speech("언제든지 내가 함께 할게, 다음에 힘들때도 나한테 와서 털어놔~ 다음에 또 보자!")
+#        time.sleep(3)
+#        text_to_speech("마지막으로 포옹 하자, 잘가")
+
+#     else :
+#        text_to_speech("미안해, 앞으로 더 노력하는 내가 될게.")

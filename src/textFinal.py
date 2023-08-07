@@ -33,7 +33,38 @@ def stt() :
                 return text
             except sr.UnknownValueError:
                 print("say again plz\n")
-                text_to_speech('잘 못 알아들었어. 다시 말해줄래?')
+                text_to_speech('잘, 못 알아들었어. 다시 말해줄래?')
+                continue
+            except sr.RequestError:
+                print("speech service down\n")
+                continue
+
+def lstt() : 
+    while True:
+        with mic as source:
+            print("say something\n")
+            audio = r.listen(source, timeout=0, phrase_time_limit=10)
+            try:
+                text = r.recognize_google(audio_data=audio, language="ko-KR")
+                return text
+            except sr.UnknownValueError:
+                print("say again plz\n")
+                text_to_speech('잘, 못 알아들었어. 다시 말해줄래?')
+                continue
+            except sr.RequestError:
+                print("speech service down\n")
+                continue
+
+def tsst() : 
+    while True:
+        with mic as source:
+            print("say something\n")
+            audio = r.listen(source, timeout=0, phrase_time_limit=10)
+            try:
+                text = r.recognize_google(audio_data=audio, language="ko-KR")
+                return text
+            except sr.UnknownValueError:
+                print("say again plz\n")
                 continue
             except sr.RequestError:
                 print("speech service down\n")

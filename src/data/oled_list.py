@@ -105,3 +105,11 @@ def o_tired():
 def o_heart():
     o.draw_image("/home/pi/PCAP/src/data/icon/화면_default1.png")
     o.show()
+
+def o_cam():
+    o.draw_image("/home/pi/smallpic.jpg")
+    o.show()
+
+def o_time():
+    o.draw_image("/home/pi/PCAP/src/data/icon/화면_시계.png")
+    o.show()
