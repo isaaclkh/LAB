@@ -27,6 +27,45 @@ audio = TextToSpeech()
 motion.set_profile("/home/pi/PCAP/src/data/motion_db.json")
 # 효과음 중 스탬프 찍기, 사진 찍기는 TTS 끝나고 재생 => 놀이 스크립트에서 효과음 재생!
 
+def medi_bmg():
+    audio.play(filename="/home/pi/PCAP/src/music/medi_bmg.wav", out='local', volume=-2000, background=False)
+
+def medi_g():
+    audio.play(filename="/home/pi/PCAP/src/music/medi.mp3", out='local', volume=-2000, background=False)
+
+
+def do_medi():
+    a = Thread(target=medi_bmg, args=())
+    b = Thread(target=medi_g,args=())
+    m = thread(target=motion.set_motion,args=())
+    
+
+def do_shake_hands():
+    m = Thread(target=motion.set_motion, args=("shake_hands", 1))      # "동작 이름", n번 반복
+    o = Thread(target=oled.o_shakehands, args=())
+
+    m.daemon = True
+    o.daemon = True
+
+    m.start()
+    o.start()
+
+    m.join()
+    o.join()
+
+def do_hug_me():
+    m = Thread(target=motion.set_motion, args=("hug_me", 1))      # "동작 이름", n번 반복
+    o = Thread(target=oled.o_hug, args=())
+
+    m.daemon = True
+    o.daemon = True
+
+    m.start()
+    o.start()
+
+    m.join()
+    o.join()
+
 def dance_music():
     audio.play(filename="/home/pi/PCAP/src/music/superShy.mp3", out='local', volume=-2000, background=False)
 
@@ -78,24 +117,17 @@ def do_question_L():
         break
 
 
-def do_question_S(ask):
+def do_question_S():
     # audio.play(filename="/home/pi/AI_pibo2/src/data/audio/물음표소리1.wav", out='local', volume=-1000, background=False)
     
     m = Thread(target=motion.set_motion, args=("m_question_S", 1))
     o = Thread(target=oled.o_question(), args=())
-    s = Thread(target=text_to_speech, args = (f"{ask}",))
 
     m.daemon = True
     o.daemon = True
-    s.daemon = True
 
     m.start()
     o.start()
-    s.start()
-
-    m.join()
-    o.join()
-    s.join()
 
     while True:
         eye.e_question()
@@ -285,32 +317,47 @@ def do_agree():
         break
 
 
-def do_joy():
+def do_joy(speak):
+    print(speak)
     audio.play(filename="/home/pi/AI_pibo2/src/data/audio/기분좋음.mp3", out='local', volume=-1000, background=False)
     m = Thread(target=motion.set_motion, args=("m_joy", 1))
     o = Thread(target=oled.o_joy(), args=())
+    s = Thread(target=text_to_speech, args=(speak,))
 
     m.daemon = True
     o.daemon = True
+    s.deamon = True
 
     m.start()
     o.start()
+    s.start()
+
+    m.join()
+    o.join()
+    s.join()
 
     while True:
         eye.e_joy()
         break
 
 
-def do_sad():
+def do_sad(speak):
     audio.play(filename="/home/pi/AI_pibo2/src/data/audio/슬픈소리.wav", out='local', volume=-1000, background=False)
     m = Thread(target=motion.set_motion, args=("m_sad", 1))
     o = Thread(target=oled.o_sad(), args=())
+    s = Thread(target=text_to_speech, args=(speak,))
 
     m.daemon = True
     o.daemon = True
+    s.deamon = True
 
     m.start()
     o.start()
+    s.start()
+
+    m.join()
+    o.join()
+    s.join()
 
     while True:
         eye.e_sad()

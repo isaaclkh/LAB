@@ -113,3 +113,11 @@ def o_cam():
 def o_time():
     o.draw_image("/home/pi/PCAP/src/data/icon/화면_시계.png")
     o.show()
+
+def o_shakehands():
+    o.draw_image("/home/pi/PCAP/src/data/icon/shake.png")
+    o.show()
+
+def o_hug():
+    o.draw_image("/home/pi/PCAP/src/data/icon/hug.png")
+    o.show()

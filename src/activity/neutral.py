@@ -1,16 +1,27 @@
 import time
-from src.textFinal import text_to_speech, stt, lstt
+from src.textFinal import text_to_speech, stt, tsst
 from src.NLP import NLP, Dictionary
 from src.text_to_speech import TextToSpeech
 from src.activity.music_get import YoutubeAudioDownload
 from src.data import behavior_list
+from datetime import datetime
+import src.data.oled_list as oled
+from threading import Thread
 
 
 NLP = NLP()
 Dic = Dictionary()
 audio = TextToSpeech()
 
+global uAns
+global fileN
+
+def songplay():
+    global fileN
+    audio.play(filename=fileN, out='local', volume=-4000, background=False)
+
 def midsong() :
+    behavior_list.do_question_S()
     text_to_speech("나는 노래 듣고 부르는 걸 좋아하는데 너는 노래 듣는거 좋아해?")
     ans = stt()
 
@@ -41,22 +52,22 @@ def midsong() :
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("그래, 내가 유튜브에서 검색해서 틀어줄게. 그래서 조금 시간이 걸리지만, 잠깐만 기달려줘.")
+            text_to_speech("알겠어, 잠깐만 기다려줘.")
 
             fileN = YoutubeAudioDownload(mus)
 
             if fileN is "CANNOT":
-                text_to_speech("미안, 너가 원하는 노래를 유튜브에 검색했는데, 틀 수 있는게 없어.")
+                text_to_speech("미안, 너가 원하는 노래를 검색했는데, 틀 수 있는게 없어.")
             else :
                 audio.play(filename=fileN, out='local', volume=-2000, background=False)
 
-            text_to_speech("내 추천 곡 어땠어? 좋았어?")
+            text_to_speech("내 추천 곡 어땠어?")
             
             ans = stt()
             if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES':
-                text_to_speech("좋아해주니 나도 기분이 좋다. 흐흐.")
+                text_to_speech("좋아해주니 나도 기분이 좋다. 다음에도 좋은 노래 추천해줄게.")
             else :
-                text_to_speech("미안해, 다음에는 좋은 노래를 추천해줄게")
+                behavior_list.do_sad("미안해, 다음에는 좋은 노래를 추천해줄게")
         else :
             text_to_speech("알겠어, 그럼 노래를 틀지 않을게.")
     
@@ -65,6 +76,7 @@ def midsong() :
 
 
 def midtalk() :
+    behavior_list.do_question_S()
     text_to_speech("우리 서로에 대해서 더 알아가볼까? 나랑 게임 하나 해볼래?")
     ans = stt()
 
@@ -88,16 +100,17 @@ def midtalk() :
         ans = stt()
 
         if NLP.nlp_number(user_said=ans, dic=Dic) == 1:
+            oled.o_agree()
             text_to_speech("딩동댕! 맞았어!")
         
         else :
+            oled.o_deny()
             text_to_speech("땡! 틀렸어. 나는 카메라가 입에 있어서 내눈으로는 너를 볼 수 없어. 히히")
         
         text_to_speech("이제 너 차라례야, 10초 동안 준비할 시간을 줄게.")
         # TODO : 기다리는 10초 동안 무언가를 보여주는
 
-        oled.draw_image("/home/pi/AI_pibo2/src/data/icon/화면_시계.png")
-        oled.show()
+        oled.o_time()
 
         time.sleep(10)
 
@@ -130,4 +143,7 @@ def midtalk() :
             text_to_speech("다행이다! 다음에도 나랑 게임하자")
         
         else :
-            text_to_speech("미안해, 다음에는 더 재미있는걸 준비해 놓을게.")
+            behavior_list.do_sad("미안해, 다음에는 더 재미있는걸 준비해 놓을게.")
+    
+    else :
+        text_to_speech("아쉽구먼")

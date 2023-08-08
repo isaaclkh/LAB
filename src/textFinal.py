@@ -13,7 +13,7 @@ def text_to_speech(text):
     print("\n" + text + "\n")
     # tts 파일 생성 (*break time: 문장 간 쉬는 시간)
     tts.tts_connection(text, filename)
-    tts.play(filename, 'local', '-1500', False)     # tts 파일 재생
+    tts.play(filename, 'local', '-1000', False)     # tts 파일 재생
 
 def text_to_speech2(text):  # 원탁 아저씨
     # sendTo(text)
@@ -21,7 +21,7 @@ def text_to_speech2(text):  # 원탁 아저씨
     print("\n" + text + "\n")
     # tts 파일 생성 (*break time: 문장 간 쉬는 시간)
     tts.tts_connection2(text, filename)
-    tts.play(filename, 'local', '-1500', False)     # tts 파일 재생
+    tts.play(filename, 'local', '-1000', False)     # tts 파일 재생
 
 def stt() : 
     while True:

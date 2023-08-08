@@ -50,8 +50,8 @@ def e_agree():
 
 
 def e_joy():
-    device.send_cmd(25, '100')
+    device.send_cmd(20, '100')
 
 
 def e_sad():
-    device.send_cmd(21, '186,147,223,500')
+    device.send_cmd(20, '186,147,223,500')
