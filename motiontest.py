@@ -52,4 +52,4 @@ m.set_profile("/home/pi/PCAP/src/data/motion_db.json")
 # behavior_list.do_positivie_dance()
 # # text_to_speech("자 드가자. 고고고고고고고고고")
 
-behavior_list.do_positivie_dance()
+behavior_list.do_medi()
