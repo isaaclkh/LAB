@@ -56,7 +56,7 @@ def wait_for(item):
         break
 
 
-localIP = "192.168.137.71"
+localIP = "192.168.0.155"
 localPort = 20001
 
 user_name = '건호'
@@ -113,14 +113,15 @@ def fin(emotion):
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("너가 좋았다고하니 너무 기쁜걸!")
-            text_to_speech("너는 긍정적인 에너지가 넘치는 것 같아. 앞으로도 자주 이야기하자~")
-            time.sleep(1)
-            text_to_speech("오늘 너무 즐거웠어, 다음에 또 불러줘")
+            behavior_list.do_joy("너가 좋았다고하니 너무 기쁜걸!")
 
         else :
-            text_to_speech("미안해, 앞으로 더 노력하는 내가 될게.")
+            behavior_list.do_sad("미안해, 앞으로 더 노력하는 내가 될게.")
         
+        text_to_speech("너는 긍정적인 에너지가 넘치는 것 같아. 앞으로도 자주 이야기하자.")
+        time.sleep(1)
+        text_to_speech("오늘 너무 즐거웠어, 다음에 또 보자.")
+
         time.sleep(1)
         text_to_speech("마지막으로 악수 하자")
         behavior_list.do_shake_hands()
@@ -131,12 +132,12 @@ def fin(emotion):
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("고마워, 나의 마음이 너에게 닿아서 다행이야!")
-            text_to_speech("언제든지 이야기 나누고 싶을 때 불러줘. 친구야! ")
+            behavior_list.do_joy("고마워, 나의 마음이 너에게 닿아서 다행이야!")
 
         else :
-            text_to_speech("미안해, 앞으로 더 노력하는 내가 될게.")
+            behavior_list.do_sad("미안해, 앞으로 더 노력하는 내가 될게.")
         
+        text_to_speech("언제든지 이야기 나누고 싶을 때 불러줘.")
         time.sleep(1)
         text_to_speech("마지막으로 악수 하자")
         behavior_list.do_shake_hands()
@@ -147,33 +148,38 @@ def fin(emotion):
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("고마워, 나의 마음이 너에게 닿아서 다행이야!")
-            text_to_speech("언제든지 내가 함께 할게, 다음에 힘들때도 나한테 와서 털어놔~ 다음에 또 보자!")
+            behavior_list.do_joy("고마워, 나의 마음이 너에게 닿아서 다행이야!")
 
         else :
-            text_to_speech("미안해, 앞으로 더 노력하는 내가 될게.")
+            behavior_list.do_sad("미안해, 앞으로 더 노력하는 내가 될게.")
         
+        text_to_speech("언제든지 내가 함께 할게, 다음에 힘들때도 나한테 와서 털어놔, 다음에 또 보자!")
         time.sleep(1)
         text_to_speech("마지막으로 포옹 하자")
         behavior_list.do_hug_me()
         text_to_speech("잘가")
 
 device_obj.send_cmd(20, '0,0,0')  # 20 = eye, 0,0,0 = color rgb
-behavior_list.do_question_S()
-text_to_speech("안녕! 나는 은쪽이라고 해, 만나서 반가워.")
+behavior_list.do_question_S("안녕! 나는 은쪽이라고 해, 만나서 반가워.")
+oled.o_heart()
 text_to_speech("시작하기 전에, 나와 연결을 먼저 해줘.")
-# user_name = clientToServer(localIP, localPort)
+user_name = clientToServer(localIP, localPort)
 text_to_speech(f"너의 이름은 {user_name}{lee(user_name)}구나! 만나서 반가워")
 text_to_speech("너를 더 알아가기 위해서 얘기를 하고 싶은데. 중간에 대화를 끊고 활동으로 넘어가고 싶으면 대화 종료 라고 말해줘.")
 print(user_name)
 text_to_speech(f"{user_name}{aa(user_name)} 오늘 뭐했어?")
 
+oled.o_get()
 your_day = stt()
-em = emotion(your_day)
-text_to_speech(f"{em}")
-chatting(your_day)
-oled.o_heart()
+oled.o_agree()
 
+em = emotion(your_day)
+
+print(f"감정 : {em}")
+
+chatting(your_day)
+
+oled.o_heart()
 activities(em)
 fin(em)
 

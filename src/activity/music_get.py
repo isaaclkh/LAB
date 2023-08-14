@@ -11,7 +11,7 @@ from moviepy.editor import *
 
 
 def YoutubeAudioDownload(keyword):
-    s = Search(keyword)
+    s = Search(f"1시간 {keyword}")
     print(f"url : {s.results[0].watch_url}\n")
 
     downloadF = "src//music//" + keyword + ".mp3"

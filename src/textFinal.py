@@ -1,5 +1,6 @@
 import speech_recognition as sr
 from src.text_to_speech import TextToSpeech
+import src.data.oled_list as oled
 
 mic = sr.Microphone()
 tts = TextToSpeech()
@@ -24,15 +25,18 @@ def text_to_speech2(text):  # 원탁 아저씨
     tts.play(filename, 'local', '-1000', False)     # tts 파일 재생
 
 def stt() : 
+    oled.o_get()
     while True:
         with mic as source:
             print("say something\n")
             audio = r.listen(source, timeout=0, phrase_time_limit=5)
             try:
                 text = r.recognize_google(audio_data=audio, language="ko-KR")
+                oled.o_agree()
                 return text
             except sr.UnknownValueError:
                 print("say again plz\n")
+                oled.o_get()
                 text_to_speech('잘, 못 알아들었어. 다시 말해줄래?')
                 continue
             except sr.RequestError:

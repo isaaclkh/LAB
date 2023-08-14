@@ -121,3 +121,7 @@ def o_shakehands():
 def o_hug():
     o.draw_image("/home/pi/PCAP/src/data/icon/hug.png")
     o.show()
+
+def o_get():
+    o.draw_image("/home/pi/PCAP/src/data/icon/화면_대기1.png")
+    o.show()

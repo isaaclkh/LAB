@@ -27,17 +27,32 @@ audio = TextToSpeech()
 motion.set_profile("/home/pi/PCAP/src/data/motion_db.json")
 # 효과음 중 스탬프 찍기, 사진 찍기는 TTS 끝나고 재생 => 놀이 스크립트에서 효과음 재생!
 
-def medi_bmg():
-    audio.play(filename="/home/pi/PCAP/src/music/medi_bmg.wav", out='local', volume=-2000, background=False)
+def medi_bgm():
+    audio.play(filename="/home/pi/PCAP/src/music/medi_bgm.wav", out='local', volume=-1000, background=False)
 
 def medi_g():
     audio.play(filename="/home/pi/PCAP/src/music/medi.mp3", out='local', volume=-2000, background=False)
 
-
 def do_medi():
-    a = Thread(target=medi_bmg, args=())
-    b = Thread(target=medi_g,args=())
-    m = thread(target=motion.set_motion,args=())
+    a = Thread(target=medi_bgm, args=())
+    b = Thread(target=medi_g, args=())
+    m = Thread(target=motion.set_motion, args=("medi_breath", 1))
+
+    a.daemon = True
+    m.daemon = True
+    b.daemon = True
+
+    m.start()
+    a.start()
+    b.start()
+
+    while True :
+        eye.e_joy()
+        break
+    
+    m.join()
+    a.join()
+    b.join()
     
 
 def do_shake_hands():
@@ -117,17 +132,24 @@ def do_question_L():
         break
 
 
-def do_question_S():
+def do_question_S(speak):
     # audio.play(filename="/home/pi/AI_pibo2/src/data/audio/물음표소리1.wav", out='local', volume=-1000, background=False)
     
     m = Thread(target=motion.set_motion, args=("m_question_S", 1))
     o = Thread(target=oled.o_question(), args=())
+    s = Thread(target=text_to_speech, args=(speak,))
 
     m.daemon = True
     o.daemon = True
+    s.daemon = True
 
     m.start()
     o.start()
+    s.start()
+
+    m.join()
+    o.join()
+    s.join()
 
     while True:
         eye.e_question()

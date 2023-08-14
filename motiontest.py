@@ -39,8 +39,6 @@ from src.robotGPT import emotion, chatting
 from src.textFinal import text_to_speech, stt
 from src.data import behavior_list
 
-from src.activity.positive import happysong, happytalk
-
 NLP = NLP()
 Dic = Dictionary()
 device_obj = Device()
@@ -54,4 +52,4 @@ m.set_profile("/home/pi/PCAP/src/data/motion_db.json")
 # behavior_list.do_positivie_dance()
 # # text_to_speech("자 드가자. 고고고고고고고고고")
 
-behavior_list.do_joy("고마워~ 다음에도 찍어달라고 하면 찍어줄게")
+behavior_list.do_positivie_dance()

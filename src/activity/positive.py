@@ -27,10 +27,11 @@ def happysong():
     global uAns
     global fileN
 
-    behavior_list.do_question_S()
+    behavior_list.do_question_S("나는 노래 듣고 부르는 걸 좋아하는데. 너는 노래 듣는거 좋아해?")
 
-    text_to_speech("나는 노래 듣고 부르는 걸 좋아하는데. 너는 노래 듣는거 좋아해?")
     ans = stt()
+
+    oled.o_heart()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
         text_to_speech("어떤 장르 좋아해? 팝송? 인디? 발라드? 아니면 힙합?")
@@ -85,7 +86,7 @@ def happysong():
                 
                 # m.join()
                 # o.join()
-                audio.play(filename=fileN, out='local', volume=-2000, background=False)
+                audio.play(filename=fileN, out='local', volume=-1000, background=False)
             
             text_to_speech("내 추천 곡 어땠어?")
             
@@ -103,9 +104,11 @@ def happysong():
             
 
 def happytalk():
-    behavior_list.do_question_S()
-    text_to_speech("오늘 기분이 좋은 것 같네? 나랑 게임 하나 해볼래?")
+    behavior_list.do_question_S("오늘 기분이 좋은 것 같네? 나랑 게임 하나 해볼래?")
+
     ans = stt()
+
+    oled.o_heart()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES':
         text_to_speech("좋아! 거짓과 진실이라는 게임인데, 내가 진실 두개, 거짓 하나를 말할거야.")
@@ -129,11 +132,11 @@ def happytalk():
 
         if NLP.nlp_number(user_said=ans, dic=Dic) == '3':
             oled.o_agree()
-            text_to_speech("딩동댕! 맞았어!")
+            behavior_list.do_joy("딩동댕! 맞았어!")
         
         else :
             oled.o_deny()
-            text_to_speech("땡! 틀렸어. 나는 카메라가 입에 있어서 내눈으로는 너를 볼 수 없어. 히히")
+            behavior_list.do_sad("땡! 틀렸어. 나는 카메라가 입에 있어서 내눈으로는 너를 볼 수 없어. 히히")
         
         text_to_speech("이제 너 차라례야, 10초 동안 준비할 시간을 줄게.")
         
@@ -162,12 +165,12 @@ def happytalk():
         ans = stt()
 
         if NLP.nlp_wrong(user_said=ans, dic=Dic) == 'WRONG' :
-            text_to_speech("그래? 그럼 정답은 뭐야?")
+            behavior_list.do_sad("그래? 그럼 정답은 뭐야?")
             ans = stt()
             text_to_speech("그렇구나!")
 
         else :
-            text_to_speech(f"아싸! 그럼 {two}가 거짓이구나!")
+            behavior_list.do_joy(f"아싸! 그럼 {two}가 거짓이구나!")
 
         text_to_speech("너를 조금 더 알아갈 수 있어서 좋았어. 너는 어뗐어?")
         
@@ -183,9 +186,11 @@ def happytalk():
         text_to_speech("아쉽구먼.")
 
 def happypic(user_name) :
-    behavior_list.do_question_S()
-    text_to_speech("너는 무슨 활동 좋아해? 나는 사진찍는거 좋아하는데, 너도 좋아해?")
+    behavior_list.do_question_S("너는 무슨 활동 좋아해? 나는 사진찍는거 좋아하는데, 너도 좋아해?")
+
     ans = stt()
+
+    oled.o_heart()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
         text_to_speech("그렇구나! 기분이 좋을때 사진 찍는거 국룰이지. 나 나름 사진 잘 찍는다고 들었는데. 너도 한번 찍어줄까?")
@@ -230,8 +235,10 @@ def happypic(user_name) :
         text_to_speech("그렇구나.")
 
 def happydance(): 
-    text_to_speech("나는 기쁠 때 힙.합을 춰. 너는 춤추는거 좋아해?")
+    behavior_list.do_question_S("나는 기쁠 때, 힙.합을 춰. 너는 춤추는거 좋아해?")
+
     time.sleep(2)
+    oled.o_heart()
     text_to_speech("그렇구나. 내가 안무를 하나 배워온게 있는데 한번 보여줄까?")
     ans = stt()
 
@@ -246,7 +253,7 @@ def happydance():
         ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-            text_to_speech("고마워, 다음에는 같이 추자. 나도 너의 실력을 보고 싶다.")
+            behavior_list.do_joy("고마워, 다음에는 같이 추자. 나도 너의 실력을 보고 싶다.")
 
         else :
             behavior_list.do_sad("열심히 췄는데, 별로 였다니.. 눈물나네.. 더 노력해서 다음에는 더 잘 춰볼게.")

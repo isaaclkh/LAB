@@ -1,6 +1,7 @@
 import openai
 
 from src.textFinal import text_to_speech, stt
+import src.data.oled_list as oled
 
 openai.api_key = "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"
 
@@ -37,8 +38,10 @@ def chatting(your_day):
     while "대화 종료" not in userSay:
 
         text_to_speech(message['content'])
+        oled.o_get()
         userSay = stt()
-        
+        oled.o_agree()
+
         response = openai.ChatCompletion.create(
             model='gpt-3.5-turbo',
             n=1,
