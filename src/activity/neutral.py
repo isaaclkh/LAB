@@ -101,13 +101,14 @@ def midtalk():
         ans = stt()
 
         if NLP.nlp_number(user_said=ans, dic=Dic) == '3':
-            oled.o_agree()
-            behavior_list.do_joy("딩동댕! 맞았어!")
+            # oled.o_agree()
+            behavior_list.do_agree("딩동댕! 맞았어!")
         
         else :
             oled.o_deny()
             behavior_list.do_sad("땡! 틀렸어. 나는 카메라가 입에 있어서 내눈으로는 너를 볼 수 없어. 히히")
         
+        oled.o_heart()
         text_to_speech("이제 너 차라례야, 10초 동안 준비할 시간을 줄게.")
         
         # TODO : 기다리는 10초 동안 무언가를 보여주는
@@ -130,7 +131,7 @@ def midtalk():
         audio.play(filename="/home/pi/AI_pibo2/src/data/audio/물음표소리1.wav",
                    out='local', volume=-1000, background=False)
         
-        text_to_speech("이번. 맞았어?")
+        text_to_speech("음... 이번인 것 같은데. 맞았어?")
 
         ans = stt()
 

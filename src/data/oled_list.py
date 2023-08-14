@@ -123,5 +123,13 @@ def o_hug():
     o.show()
 
 def o_get():
-    o.draw_image("/home/pi/PCAP/src/data/icon/화면_대기1.png")
+    o.draw_image("/home/pi/PCAP/src/data/icon/화면_인식1.png")
+    o.show()
+
+def o_cannot():
+    o.draw_image("/home/pi/PCAP/src/data/icon/화면_부정.png")
+    o.show()
+
+def o_nature():
+    o.draw_image("/home/pi/PCAP/src/data/icon/화면_자연.png")
     o.show()

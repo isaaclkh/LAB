@@ -78,16 +78,16 @@ def sadsong() :
 
 def medi() :
     behavior_list.do_question_S("마음을 가다듬고 눈을 감고 내가 들려주는 노래에 맞춰서 호흡을 가다듬어볼래? 너의 복잡한 감정들이 조금은 정리될 수 있도록 도움이 될 거야.")
-    oled.o_heart()
     #TODO : 명상 틀어주기
     #숨쉬는 동작
+    oled.o_nature()
     behavior_list.do_medi()
 
     text_to_speech("명상하고나니 기분은 좀 어때?")
     ans = stt()
 
     if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
-        behavior_list.do_joy("너가 좋다니 다행이다~ 다음에도 나랑 명상하자.")
+        behavior_list.do_joy("너가 좋다니 다행이다! 다음에도 나랑 명상하자.")
 
     else :
         behavior_list.do_sad("이런.. 다음에는 더 좋은 활동을 해보자.")
@@ -114,14 +114,14 @@ def drawing() :
                 break
         
         text_to_speech("다 끝났어? 너의 그림일기를 보고 싶은데, 종이를 들어서 나에게 보여줄래?")
-        m.set_motion("scan")
+        m.set_motion("scan", 1)
         text_to_speech("정말 잘 그렸다. 무슨 내용이야?")
 
         time.sleep(10)
 
         text_to_speech("그렇구나! 그림으로 정말 잘 표현한 것 같아. 그림 일기를 그려보니 어때? 마음이 편안해 진 것 같아?")
 
-        ans = tsst()
+        ans = stt()
 
         if NLP.nlp_answer(user_said=ans, dic=Dic) == 'YES' :
             behavior_list.do_joy("다행이다. 나도 일기를 쓰면 마음이 편해지더라고. 앞으로 너도 일기 꾸준히 써봐.")

@@ -25,10 +25,10 @@ def text_to_speech2(text):  # 원탁 아저씨
     tts.play(filename, 'local', '-1000', False)     # tts 파일 재생
 
 def stt() : 
-    oled.o_get()
     while True:
         with mic as source:
             print("say something\n")
+            oled.o_get()
             audio = r.listen(source, timeout=0, phrase_time_limit=5)
             try:
                 text = r.recognize_google(audio_data=audio, language="ko-KR")
@@ -36,7 +36,7 @@ def stt() :
                 return text
             except sr.UnknownValueError:
                 print("say again plz\n")
-                oled.o_get()
+                oled.o_cannot()
                 text_to_speech('잘, 못 알아들었어. 다시 말해줄래?')
                 continue
             except sr.RequestError:
@@ -46,6 +46,7 @@ def stt() :
 def lstt() : 
     while True:
         with mic as source:
+            oled.o_get()
             print("say something\n")
             audio = r.listen(source, timeout=0, phrase_time_limit=10)
             try:
@@ -53,6 +54,7 @@ def lstt() :
                 return text
             except sr.UnknownValueError:
                 print("say again plz\n")
+                oled.o_cannot()
                 text_to_speech('잘, 못 알아들었어. 다시 말해줄래?')
                 continue
             except sr.RequestError:
@@ -63,7 +65,7 @@ def tsst() :
     while True:
         with mic as source:
             print("say something\n")
-            audio = r.listen(source, timeout=0, phrase_time_limit=10)
+            audio = r.listen(source, timeout=0, phrase_time_limit=5)
             try:
                 text = r.recognize_google(audio_data=audio, language="ko-KR")
                 return text

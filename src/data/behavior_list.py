@@ -6,6 +6,7 @@ import sys
 import time
 import json
 from threading import Thread
+import threading
 
 # openpibo module
 import openpibo
@@ -34,33 +35,40 @@ def medi_g():
     audio.play(filename="/home/pi/PCAP/src/music/medi.mp3", out='local', volume=-2000, background=False)
 
 def do_medi():
-    a = Thread(target=medi_bgm, args=())
+    a = Thread(target=eye.e_joy, args=())
     b = Thread(target=medi_g, args=())
-    m = Thread(target=motion.set_motion, args=("medi_breath", 1))
+    # m = Thread(target=motion.set_motion, args=("medi_breath", 1))
+    c = Thread(target=medi_bgm, args=())
 
-    a.daemon = True
-    m.daemon = True
-    b.daemon = True
+    # a.daemon = True
+    # b.daemon = True
+    # c.daemon = True
 
-    m.start()
+    # m.start()
     a.start()
     b.start()
+    c.start()
 
-    while True :
-        eye.e_joy()
-        break
+    motion.set_motion("medi_breath", 1)
     
-    m.join()
+    print(threading.active_count())
+    print(threading.current_thread())
+
     a.join()
     b.join()
+    c.join()
+
+    print("AFTER JOIN")
+    print(threading.active_count())
+    print(threading.current_thread())
     
 
 def do_shake_hands():
     m = Thread(target=motion.set_motion, args=("shake_hands", 1))      # "동작 이름", n번 반복
     o = Thread(target=oled.o_shakehands, args=())
 
-    m.daemon = True
-    o.daemon = True
+    # m.daemon = True
+    # o.daemon = True
 
     m.start()
     o.start()
@@ -72,8 +80,8 @@ def do_hug_me():
     m = Thread(target=motion.set_motion, args=("hug_me", 1))      # "동작 이름", n번 반복
     o = Thread(target=oled.o_hug, args=())
 
-    m.daemon = True
-    o.daemon = True
+    # m.daemon = True
+    # o.daemon = True
 
     m.start()
     o.start()
@@ -323,20 +331,27 @@ def do_praise_S():
         break
 
 
-def do_agree():
+def do_agree(speak):
     audio.play(filename="/home/pi/AI_pibo2/src/data/audio/딩동댕3.wav", out='local', volume=-1000, background=False)
     m = Thread(target=motion.set_motion, args=("m_agree", 1))
     o = Thread(target=oled.o_agree(), args=())
+    s = Thread(target=text_to_speech, args=(speak,))
 
-    m.daemon = True
-    o.daemon = True
+    # m.daemon = True
+    # o.daemon = True
+    # s.daemon = True
 
     m.start()
     o.start()
+    s.start()
 
-    while True:
-        eye.e_agree()
-        break
+    # while True:
+    #     eye.e_agree()
+    #     break
+
+    m.join()
+    o.join()
+    s.join()
 
 
 def do_joy(speak):
@@ -346,21 +361,21 @@ def do_joy(speak):
     o = Thread(target=oled.o_joy(), args=())
     s = Thread(target=text_to_speech, args=(speak,))
 
-    m.daemon = True
-    o.daemon = True
-    s.deamon = True
+    # m.daemon = True
+    # o.daemon = True
+    # s.deamon = True
 
     m.start()
     o.start()
     s.start()
 
+    # while True:
+    #     eye.e_joy()
+    #     break
+    
     m.join()
     o.join()
     s.join()
-
-    while True:
-        eye.e_joy()
-        break
 
 
 def do_sad(speak):
@@ -369,21 +384,21 @@ def do_sad(speak):
     o = Thread(target=oled.o_sad(), args=())
     s = Thread(target=text_to_speech, args=(speak,))
 
-    m.daemon = True
-    o.daemon = True
-    s.deamon = True
+    # m.daemon = True
+    # o.daemon = True
+    # s.deamon = True
 
     m.start()
     o.start()
     s.start()
 
+    # while True:
+    #     eye.e_sad()
+    #     break
+
     m.join()
     o.join()
     s.join()
-
-    while True:
-        eye.e_sad()
-        break
 
 
 def praising():

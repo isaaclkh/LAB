@@ -67,7 +67,7 @@ def activities(emotion):
     # happydef =[happysong, happytalk, happypic, happydance]
     # neutraldef = [midtalk, midsong]
     # saddef = [sadsong, medy, drawing]
-
+    oled.o_heart()
     activity = []
     
     if emotion == '긍정':
@@ -165,7 +165,7 @@ oled.o_heart()
 text_to_speech("시작하기 전에, 나와 연결을 먼저 해줘.")
 user_name = clientToServer(localIP, localPort)
 text_to_speech(f"너의 이름은 {user_name}{lee(user_name)}구나! 만나서 반가워")
-text_to_speech("너를 더 알아가기 위해서 얘기를 하고 싶은데. 중간에 대화를 끊고 활동으로 넘어가고 싶으면 대화 종료 라고 말해줘.")
+text_to_speech("너를 더 알아가기 위해서 이야기를 하고 싶은데. 중간에 대화를 끊고 활동으로 넘어가고 싶으면 대화 종료 라고 말해줘.")
 print(user_name)
 text_to_speech(f"{user_name}{aa(user_name)} 오늘 뭐했어?")
 
