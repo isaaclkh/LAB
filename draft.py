@@ -169,9 +169,7 @@ text_to_speech("너를 더 알아가기 위해서 얘기를 하고 싶은데. �
 print(user_name)
 text_to_speech(f"{user_name}{aa(user_name)} 오늘 뭐했어?")
 
-oled.o_get()
 your_day = stt()
-oled.o_agree()
 
 em = emotion(your_day)
 
