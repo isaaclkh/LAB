@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "516104758418",
+    "firebase_url": "https://pibo-aac5a-default-rtdb.firebaseio.com",
+    "project_id": "pibo-aac5a",
+    "storage_bucket": "pibo-aac5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516104758418:android:88c683e89ffa6a9ef6f24b",
+        "android_client_info": {
+          "package_name": "com.example.pibo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516104758418-9pfe67je9jt0qskdeihajdb3h4pqjvlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAuhyHCe2unXy4DxDr4GhMMMjpXJON21o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516104758418-9pfe67je9jt0qskdeihajdb3h4pqjvlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
