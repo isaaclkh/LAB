@@ -3,7 +3,7 @@ import openai
 from src.textFinal import text_to_speech, stt
 import src.data.oled_list as oled
 
-openai.api_key = "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"
+openai.api_key = ""
 
 def emotion(your_day):
     # Generate text using the GPT model
