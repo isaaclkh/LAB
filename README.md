@@ -30,7 +30,7 @@
 ***
 :star: 2023년 1학기 캡스톤
 -----------------------------
-(CAP/src/play_scenario/CAP/all.py)
+(CAP/src/play_scenario/CAP/final.py)
 
 > #### 시나리오 개발
 > :exclamation:사용자의 감정을 아는 것이 필수적이다
